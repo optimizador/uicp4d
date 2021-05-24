@@ -1,0 +1,9 @@
+<% 1.times do %>
+  <h1>Mi primera aplicación Web con Sinatra! Hola <%= @name %></h1>
+<% end %>
+
+
+<form action="/nombre" method="get">
+  <label for="name"><input type="text" id="name" name="name">
+  <button type="submit">Enviar</button>
+</form>
