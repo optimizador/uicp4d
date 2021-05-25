@@ -1,0 +1,46 @@
+<% 1.times do %>
+  <h1>Herramienta para dimensionamiento de Orquestadores de Contenedores</h1>
+<% end %>
+
+<p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
+<form action="/cp4drespuesta" method="get">
+<table style="width:100%" align="left">
+  <tr>
+    <th bgcolor="violet">Parámetro</th>
+    <th bgcolor="violet">Valor</th>
+  </tr>
+  <tr>
+    <td>CPU</td>
+    <td>
+      <label for="cpu"><input type="text" id="cpu" name="cpu">
+    </td>
+  </tr>
+  <tr>
+    <td>RAM (GB)</td>
+    <td>
+      <label for="RAM (GB)"><input type="text" id="ram" name="ram">
+    </td>
+  </tr>
+  <tr>
+    <td>Almacenamiento (GB)</td>
+    <td>
+      <label for="Almacenamiento Blockstorage (GB)"><input type="text" id="storage" name="storage">
+    </td>
+  </tr>
+  <tr>
+    <td>IOPS Almacenamiento</td>
+    <td>
+      <select name="iops" id="iops">
+        <option value=".25">.25</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="10">10</option>
+      </select>
+    </td>
+  </tr>
+</table>
+<button type="submit">Quiero mi dimensionamiento</button>
+</form>
+<form action="/" method="get">
+<button type="submit">Regresar</button>
+</form>

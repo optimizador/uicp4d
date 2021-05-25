@@ -1,9 +1,20 @@
 <% 1.times do %>
-  <h1>Mi primera aplicación Web con Sinatra! Hola <%= @name %></h1>
+  <h1>Herramienta para dimensionamiento de Orquestadores de Contenedores</h1>
 <% end %>
 
+<p>Selecciona una de las siguientes opciones para realizar tú dimensionamiento</p>
 
-<form action="/nombre" method="get">
-  <label for="name"><input type="text" id="name" name="name">
-  <button type="submit">Enviar</button>
-</form>
+<table style="width:100%" align="left">
+  <tr>
+    <th bgcolor="violet">Dimensionamiento para...</th>
+    <th bgcolor="violet">Sabor</th>
+  </tr>
+  <tr>
+    <td>Cloud Paks</td>
+    <td><form action="/cp4d" method="get">
+      <!--label for="name"><input type="text" id="name" name="name"-->
+      <button type="submit">Cloud Pak for Data</button>
+    </form>
+    </td>
+  </tr>
+</table>

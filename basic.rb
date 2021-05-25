@@ -18,3 +18,19 @@ get '/nombre' do
   response.set_cookie("llave2", value: "valor2")
   erb :index
 end
+
+get '/cp4d' do
+  logger = Logger.new(STDOUT)
+  logger.info("Selecciono dimensionamiento para CP4D")
+  @name = "CP4D"
+  response.set_cookie("llave2", value: "valor2")
+  erb :cp4d
+end
+
+get '/cp4drespuesta' do
+  logger = Logger.new(STDOUT)
+  logger.info("Recibiendo parametros para dimensionamiento de CP4D: CPU: #{params[:cpu]} RAM: #{params[:ram]} Storage: #{params[:storage]} IOPS #{params[:iops]}")
+  @name = "CP4D"
+  response.set_cookie("llave2", value: "valor2")
+  erb :cp4d
+end
