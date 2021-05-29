@@ -1,30 +1,26 @@
-<% 1.times do %>
-  <h1>Herramienta para dimensionamiento de Orquestadores de Contenedores</h1>
-<% end %>
-
 <p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
 <form action="/cp4drespuesta" method="get">
 <table style="width:100%" align="left">
   <tr>
-    <th bgcolor="violet">Parámetro</th>
-    <th bgcolor="violet">Valor</th>
+    <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+    <th bgcolor="#00008B" style="color: white;">Valor</th>
   </tr>
   <tr>
     <td>CPU</td>
     <td>
-      <label for="cpu"><input type="text" id="cpu" name="cpu">
+      <label for="cpu"><input type="number" id="cpu" name="cpu">
     </td>
   </tr>
   <tr>
     <td>RAM (GB)</td>
     <td>
-      <label for="RAM (GB)"><input type="text" id="ram" name="ram">
+      <label for="RAM (GB)"><input type="number" id="ram" name="ram">
     </td>
   </tr>
   <tr>
-    <td>Almacenamiento (GB)</td>
+    <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
     <td>
-      <label for="Almacenamiento Filestorage (GB)"><input type="text" id="storage" name="storage">
+      <label for="Almacenamiento Filestorage (GB)"><input type="number" id="storage" name="storage">
     </td>
   </tr>
   <tr>
@@ -40,6 +36,32 @@
   </tr>
 </table>
 <button type="submit">Quiero mi dimensionamiento</button>
+
+<% if (respuestasizing != nil and respuestasizing.size>0) then%>
+<table  style="width:100%" align="left">
+  <thead>
+    <tr>
+      <th bgcolor="#00008B" style="color: white;">Flavor</th>
+      <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+      <th bgcolor="#00008B" style="color: white;">Workers</th>
+      <th bgcolor="#00008B" style="color: white;">Precio</th>
+      <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% respuestasizing.each do |json| %>
+      <tr>
+        <td><%= json["flavor"].to_s %></td>
+        <td><%= json["infra_type"].to_s %></td>
+        <td><%= json["workers"].to_s %></td>
+        <td><%= json["precio"].to_s %></td>
+        <td><%= json["precio_subs"].to_s %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
 </form>
 <form action="/" method="get">
 <button type="submit">Regresar</button>

@@ -1,4 +1,6 @@
 require 'sinatra'
+require 'rest-client'
+
 set(:cookie_options) do
   { :expires => Time.now + 30*60 }
 end
@@ -23,14 +25,24 @@ get '/cp4d' do
   logger = Logger.new(STDOUT)
   logger.info("Selecciono dimensionamiento para CP4D")
   @name = "CP4D"
+  respuestasizing=[]
   response.set_cookie("llave2", value: "valor2")
-  erb :cp4d
+    erb :cp4d , :locals => {:respuestasizing => respuestasizing}
 end
 
 get '/cp4drespuesta' do
   logger = Logger.new(STDOUT)
   logger.info("Recibiendo parametros para dimensionamiento de CP4D: CPU: #{params[:cpu]} RAM: #{params[:ram]} Storage: #{params[:storage]} IOPS #{params[:iops]}")
-  @name = "CP4D"
-  response.set_cookie("llave2", value: "valor2")
-  erb :cp4d
+  @name = "CP4D-Dimensionamiento"
+  cpu="#{params['cpu']}"
+  ram="#{params['ram']}"
+  ram="#{params['storage']}"
+  iops="#{params['iops']}"
+
+  #parametros recibidos
+  respuestasizing = RestClient.get "http://localhost:8080/api/v1/sizingcluster?cpu='#{cpu}'&ram='#{ram}'", {:params => {}}
+  respuestasizing=JSON.parse(respuestasizing.to_s)
+  logger.info(respuestasizing)
+  #erb :cp4d , :locals => {:respuestasizing => params[:respuestasizing]}
+  erb :cp4d , :locals => {:respuestasizing => respuestasizing}
 end
