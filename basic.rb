@@ -26,8 +26,9 @@ get '/cp4d' do
   logger.info("Selecciono dimensionamiento para CP4D")
   @name = "CP4D"
   respuestasizing=[]
+  respuestastorage=[]
   response.set_cookie("llave2", value: "valor2")
-    erb :cp4d , :locals => {:respuestasizing => respuestasizing}
+    erb :cp4d , :locals => {:respuestasizing => respuestasizing, :respuestastorage => respuestastorage}
 end
 
 get '/cp4drespuesta' do
@@ -36,13 +37,17 @@ get '/cp4drespuesta' do
   @name = "CP4D-Dimensionamiento"
   cpu="#{params['cpu']}"
   ram="#{params['ram']}"
-  ram="#{params['storage']}"
+  storage="#{params['storage']}"
   iops="#{params['iops']}"
 
   #parametros recibidos
   respuestasizing = RestClient.get "http://localhost:8080/api/v1/sizingcluster?cpu='#{cpu}'&ram='#{ram}'", {:params => {}}
   respuestasizing=JSON.parse(respuestasizing.to_s)
   logger.info(respuestasizing)
+  respuestastorage = RestClient.get "http://localhost:8080/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=mexico", {:params => {}}
+  respuestastorage=JSON.parse(respuestastorage.to_s)
+  logger.info(respuestastorage)
+
   #erb :cp4d , :locals => {:respuestasizing => params[:respuestasizing]}
-  erb :cp4d , :locals => {:respuestasizing => respuestasizing}
+  erb :cp4d , :locals => {:respuestasizing => respuestasizing, :respuestastorage => respuestastorage}
 end

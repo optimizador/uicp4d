@@ -37,31 +37,61 @@
 </table>
 <button type="submit">Quiero mi dimensionamiento</button>
 
+<!--%=respuestastorage%-->
 <% if (respuestasizing != nil and respuestasizing.size>0) then%>
-<table  style="width:100%" align="left">
-  <thead>
-    <tr>
-      <th bgcolor="#00008B" style="color: white;">Flavor</th>
-      <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
-      <th bgcolor="#00008B" style="color: white;">Workers</th>
-      <th bgcolor="#00008B" style="color: white;">Precio</th>
-      <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% respuestasizing.each do |json| %>
+<h3>Dimensionamiento Clúster</h3>
+  <table  style="width:100%" align="left">
+    <thead>
       <tr>
-        <td><%= json["flavor"].to_s %></td>
-        <td><%= json["infra_type"].to_s %></td>
-        <td><%= json["workers"].to_s %></td>
-        <td><%= json["precio"].to_s %></td>
-        <td><%= json["precio_subs"].to_s %></td>
+        <th bgcolor="#00008B" style="color: white;">Flavor</th>
+        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+        <th bgcolor="#00008B" style="color: white;">Workers</th>
+        <th bgcolor="#00008B" style="color: white;">Precio</th>
+        <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% respuestasizing.each do |json| %>
+        <tr>
+          <td><%= json["flavor"].to_s %></td>
+          <td><%= json["infra_type"].to_s %></td>
+          <td><%= json["workers"].to_s %></td>
+          <td><%= json["precio"].to_s %></td>
+          <td><%= json["precio_subs"].to_s %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
 
+<!--%=respuestastorage%-->
+<% if (respuestastorage != nil and respuestastorage.size>0) then%>
+<h3>Dimensionamiento Almacenamiento</h3>
+  <table  style="width:100%" align="left">
+    <thead>
+      <tr>
+        <th bgcolor="#00008B" style="color: white;">IOPS/GB</th>
+        <th bgcolor="#00008B" style="color: white;">Tamaño máximo</th>
+        <th bgcolor="#00008B" style="color: white;">Unidades de Tamaño Máximo</th>
+        <th bgcolor="#00008B" style="color: white;">Precio Unidades</th>
+        <th bgcolor="#00008B" style="color: white;">Unidad Restante</th>
+        <th bgcolor="#00008B" style="color: white;">Precio Unidad Restante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% respuestastorage.each do |json| %>
+        <tr>
+          <td><%= json["iops"].to_s %></td>
+          <td><%= json["maxunit"].to_s %></td>
+          <td><%= json["unidades"].to_s %></td>
+          <td><%= json["precio"].to_s %></td>
+          <td><%= json["unidadrestante"].to_s %></td>
+          <td><%= json["preciounidadrestante"].to_s %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 </form>
 <form action="/" method="get">
 <button type="submit">Regresar</button>
