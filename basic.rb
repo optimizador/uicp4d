@@ -32,19 +32,21 @@ get '/cp4d' do
 end
 
 get '/cp4drespuesta' do
+
   logger = Logger.new(STDOUT)
   logger.info("Recibiendo parametros para dimensionamiento de CP4D: CPU: #{params[:cpu]} RAM: #{params[:ram]} Storage: #{params[:storage]} IOPS #{params[:iops]}")
   @name = "CP4D-Dimensionamiento"
+  urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
   cpu="#{params['cpu']}"
   ram="#{params['ram']}"
   storage="#{params['storage']}"
   iops="#{params['iops']}"
 
   #parametros recibidos
-  respuestasizing = RestClient.get "http://localhost:8080/api/v1/sizingcluster?cpu='#{cpu}'&ram='#{ram}'", {:params => {}}
+  respuestasizing = RestClient.get "#{urlapi}/api/v1/sizingcluster?cpu='#{cpu}'&ram='#{ram}'", {:params => {}}
   respuestasizing=JSON.parse(respuestasizing.to_s)
   logger.info(respuestasizing)
-  respuestastorage = RestClient.get "http://localhost:8080/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=mexico", {:params => {}}
+  respuestastorage = RestClient.get "#{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=mexico", {:params => {}}
   respuestastorage=JSON.parse(respuestastorage.to_s)
   logger.info(respuestastorage)
 
