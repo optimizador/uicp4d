@@ -1,69 +1,180 @@
 <p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
+
+<p>
+<form action="/" method="get">
+<button type="submit"> <-- Regresar </button>
+</form>
+</p>
+<p style="font-style: italic;">
+NOTAS:<br>
+*Los precios lista que se presentarán son calculados y pueden variar respecto a los presentados en IBM Cloud en +-1%<br>
+**Para procesos de special bid es requerido obtener los precios lista desde cloud.ibm.com<br>
+</p>
+
 <form action="/cp4drespuesta" method="get">
+
 <table style="width:100%" align="left">
   <tr>
-    <th bgcolor="#00008B" style="color: white;">Parámetro</th>
-    <th bgcolor="#00008B" style="color: white;">Valor</th>
+    <th bgcolor="#00008B" style="color: white; width:50%" >Parámetros Clúster</th>
   </tr>
   <tr>
-    <td>CPU</td>
     <td>
-      <label for="cpu"><input type="number" id="cpu" name="cpu">
-    </td>
-  </tr>
-  <tr>
-    <td>RAM (GB)</td>
-    <td>
-      <label for="RAM (GB)"><input type="number" id="ram" name="ram">
-    </td>
-  </tr>
-  <tr>
-    <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
-    <td>
-      <label for="Almacenamiento Filestorage (GB)"><input type="number" id="storage" name="storage">
-    </td>
-  </tr>
-  <tr>
-    <td>IOPS Almacenamiento</td>
-    <td>
-      <select name="iops" id="iops">
-        <option value=".25">.25</option>
-        <option value="2">2</option>
-        <option value="4">4</option>
-        <option value="10">10</option>
-      </select>
-    </td>
-  </tr>
-</table>
-<button type="submit">Quiero mi dimensionamiento</button>
+        <!-- tabla parametros del clúster -->
+        <table style="width:100%" align="left">
+          <tr>
+            <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+            <th bgcolor="#00008B" style="color: white;">Valor</th>
+          </tr>
+          <tr>
+            <td>CPU</td>
+            <td>
+              <label for="cpu"><input type="number" id="cpu" name="cpu">
+            </td>
+          </tr>
+          <tr>
+            <td>RAM (GB)</td>
+            <td>
+              <label for="RAM (GB)"><input type="number" id="ram" name="ram">
+            </td>
+          </tr>
+          <tr>
+            <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
+            <td>
+              <label for="Almacenamiento Filestorage (GB)"><input type="number" id="storage" name="storage">
+            </td>
+          </tr>
+          <tr>
+            <td>IOPS Almacenamiento</td>
+            <td>
+              <select name="iops" id="iops">
+                <option value=".25">.25</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="10">10</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Región</td>
+            <td>
+              <select name="region" id="region">
+                <option value="mexico">México</option>
+              </select>
+            </td>
+          </tr>
 
-<!--%=respuestastorage%-->
-<% if (respuestasizing != nil and respuestasizing.size>0) then%>
-<h3>Dimensionamiento Clúster</h3>
-  <table  style="width:100%" align="left">
-    <thead>
+          <tr>
+            <td>Precios del País</td>
+            <td>
+              <select name="preciopais" id="preciopais">
+                <option value="mexico">México</option>
+              </select>
+            </td>
+        </table>
+
+
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="#00008B" style="color: white; width:50%" >Parámetros Respaldos</th>
+  </tr>
+<tr>
+  <td>
+
+      <!-- tabla parametros del respaldo-->
+    <table style="width:100%" align="left">
       <tr>
-        <th bgcolor="#00008B" style="color: white;">Flavor</th>
-        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
-        <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <th bgcolor="#00008B" style="color: white;">Precio</th>
-        <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
+        <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+        <th bgcolor="#00008B" style="color: white;">Valor</th>
       </tr>
-    </thead>
-    <tbody>
-      <% respuestasizing.each do |json| %>
-        <tr>
-          <td><%= json["flavor"].to_s %></td>
-          <td><%= json["infra_type"].to_s %></td>
-          <td><%= json["workers"].to_s %></td>
-          <td><%= json["precio"].to_s %></td>
-          <td><%= json["precio_subs"].to_s %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+      <tr>
+        <td>Incluir Respaldos con Portworx Backup</td>
+        <td>
+          <input type="checkbox" name="respaldos" id="respaldos" value="1">Si<br>
+        </td>
+      </tr>
 
+      <tr>
+        <td colspan="2" bgcolor="#00008B" style="color: white;">Políticas de Respaldo</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <table style="width:100%" align="left">
+            <tr>
+              <th bgcolor="#00008B" style="color: white;">Tipo Respaldo</th>
+              <th bgcolor="#00008B" style="color: white;">Incluir</th>
+              <th bgcolor="#00008B" style="color: white;">Cantidad en un mes</th>
+              <th bgcolor="#00008B" style="color: white;">Retención (días)</th>
+            </tr>
+            <tr>
+              <td>Completo</td>
+                <td>
+                  <input type="checkbox" name="incluir_completo" id="incluir_completo" value="1">Si<br>
+                  </td>
+              <td>
+                <input type="number" id="cantidad_respaldo_completo" name="cantidad_respaldo_completo">
+              </td>
+              <td>
+                <input type="number" id="retencion_respaldo_completo" name="retencion_respaldo_completo">
+              </td>
+            </tr>
+            <tr>
+              <td>Diarios incrementales</td>
+              <td>
+                <input type="checkbox" name="incluir_incremental" id="incluir_incremental" value="1">Si<br>
+                </td>
+              <td>
+                <input type="number" id="cantidad_respaldo_incrementales_diarios" name="cantidad_respaldo_incrementales_diarios">
+              </td>
+              <td>
+                <input type="number" id="retencion_respaldo_incrementales_diarios" name="retencion_respaldo_incrementales_diarios">
+              </td>
+            </tr>
+            <tr>
+              <td>Mensuales</td>
+              <td>
+                <input type="checkbox" name="incluir_mensual" id="incluir_mensual" value="1">Si<br>
+                </td>
+              <td>
+                <input type="number" id="cantidad_respaldo_mensuales" name="cantidad_respaldo_mensuales">
+              </td>
+              <td>
+                <input type="number" id="retencion_respaldo_mensuales" name="retencion_respaldo_mensuales">
+              </td>
+            </tr>
+            <tr>
+              <td>Anuales</td>
+              <td>
+                <input type="checkbox" name="incluir_anual" id="incluir_anual" value="1">Si<br>
+                </td>
+              <td>
+                <input type="number" id="cantidad_respaldo_anual" name="cantidad_respaldo_anual">
+              </td>
+              <td>
+                <input type="number" id="retencion_respaldo_anual" name="retencion_respaldo_anual">
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+    </table>
+  </td>
+  </tr>
+
+</table>
+
+
+
+<p>
+<button type="submit">Quiero mi dimensionamiento</button>
+</p>
+
+
+
+</form>
 <!--%=respuestastorage%-->
 <% if (respuestastorage != nil and respuestastorage.size>0) then%>
 <h3>Dimensionamiento Almacenamiento</h3>
@@ -92,7 +203,56 @@
     </tbody>
   </table>
 <% end %>
-</form>
-<form action="/" method="get">
-<button type="submit">Regresar</button>
-</form>
+
+<!--%=respuestastorage%-->
+<% if (respuestasizing != nil and respuestasizing.size>0) then%>
+<h3>Dimensionamiento Clúster más económico</h3>
+  <table  style="width:100%" align="left">
+    <thead>
+      <tr>
+        <th bgcolor="#00008B" style="color: white;">Flavor</th>
+        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+        <th bgcolor="#00008B" style="color: white;">Workers</th>
+        <th bgcolor="#00008B" style="color: white;">Precio</th>
+        <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% respuestasizing.each do |json| %>
+        <tr>
+          <td><%= json["flavor"].to_s %></td>
+          <td><%= json["infra_type"].to_s %></td>
+          <td><%= json["workers"].to_s %></td>
+          <td><%= json["precio"].to_s %></td>
+          <td><%= json["precio_subs"].to_s %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if (respuestasizingalt != nil and respuestasizingalt.size>0) then%>
+<h3>Alternativas del Dimensionamiento Clúster</h3>
+  <table  style="width:100%" align="left">
+    <thead>
+      <tr>
+        <th bgcolor="#00008B" style="color: white;">Flavor</th>
+        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+        <th bgcolor="#00008B" style="color: white;">Workers</th>
+        <th bgcolor="#00008B" style="color: white;">Precio</th>
+        <th bgcolor="#00008B" style="color: white;">Precio con Subscripción OCP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% respuestasizingalt.each do |json| %>
+        <tr>
+          <td><%= json["flavor"].to_s %></td>
+          <td><%= json["infra_type"].to_s %></td>
+          <td><%= json["workers"].to_s %></td>
+          <td><%= json["precio"].to_s %></td>
+          <td><%= json["precio_subs"].to_s %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
