@@ -1,3 +1,7 @@
+<%def money(num)
+  "$#{num.gsub(/\d(?=(...)+$)/, '\0,')}"
+end
+%>
 <p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
 
 <p>
@@ -70,6 +74,13 @@ NOTAS:<br>
                 <option value="mexico">México</option>
               </select>
             </td>
+            <tr>
+              <td>Tipo Infraestructura</td>
+              <td>
+                <select name="tipoinfra" id="tipoinfra">
+                  <option value="shared">Compartida</option>
+                </select>
+              </td>
         </table>
 
 
@@ -77,91 +88,6 @@ NOTAS:<br>
   </tr>
   <tr>
     <th bgcolor="#00008B" style="color: white; width:50%" >Parámetros Respaldos</th>
-  </tr>
-<tr>
-  <td>
-
-      <!-- tabla parametros del respaldo-->
-    <table style="width:100%" align="left">
-      <tr>
-        <th bgcolor="#00008B" style="color: white;">Parámetro</th>
-        <th bgcolor="#00008B" style="color: white;">Valor</th>
-      </tr>
-      <tr>
-        <td>Incluir Respaldos con Portworx Backup</td>
-        <td>
-          <input type="checkbox" name="respaldos" id="respaldos" value="1">Si<br>
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2" bgcolor="#00008B" style="color: white;">Políticas de Respaldo</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-
-          <table style="width:100%" align="left">
-            <tr>
-              <th bgcolor="#00008B" style="color: white;">Tipo Respaldo</th>
-              <th bgcolor="#00008B" style="color: white;">Incluir</th>
-              <th bgcolor="#00008B" style="color: white;">Cantidad en un mes</th>
-              <th bgcolor="#00008B" style="color: white;">Retención (días)</th>
-            </tr>
-            <tr>
-              <td>Completo</td>
-                <td>
-                  <input type="checkbox" name="incluir_completo" id="incluir_completo" value="1">Si<br>
-                  </td>
-              <td>
-                <input type="number" id="cantidad_respaldo_completo" name="cantidad_respaldo_completo">
-              </td>
-              <td>
-                <input type="number" id="retencion_respaldo_completo" name="retencion_respaldo_completo">
-              </td>
-            </tr>
-            <tr>
-              <td>Diarios incrementales</td>
-              <td>
-                <input type="checkbox" name="incluir_incremental" id="incluir_incremental" value="1">Si<br>
-                </td>
-              <td>
-                <input type="number" id="cantidad_respaldo_incrementales_diarios" name="cantidad_respaldo_incrementales_diarios">
-              </td>
-              <td>
-                <input type="number" id="retencion_respaldo_incrementales_diarios" name="retencion_respaldo_incrementales_diarios">
-              </td>
-            </tr>
-            <tr>
-              <td>Mensuales</td>
-              <td>
-                <input type="checkbox" name="incluir_mensual" id="incluir_mensual" value="1">Si<br>
-                </td>
-              <td>
-                <input type="number" id="cantidad_respaldo_mensuales" name="cantidad_respaldo_mensuales">
-              </td>
-              <td>
-                <input type="number" id="retencion_respaldo_mensuales" name="retencion_respaldo_mensuales">
-              </td>
-            </tr>
-            <tr>
-              <td>Anuales</td>
-              <td>
-                <input type="checkbox" name="incluir_anual" id="incluir_anual" value="1">Si<br>
-                </td>
-              <td>
-                <input type="number" id="cantidad_respaldo_anual" name="cantidad_respaldo_anual">
-              </td>
-              <td>
-                <input type="number" id="retencion_respaldo_anual" name="retencion_respaldo_anual">
-              </td>
-            </tr>
-          </table>
-
-        </td>
-      </tr>
-
-    </table>
-  </td>
   </tr>
 
 </table>
@@ -223,8 +149,8 @@ NOTAS:<br>
           <td><%= json["flavor"].to_s %></td>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
-          <td><%= json["precio"].to_s %></td>
-          <td><%= json["precio_subs"].to_s %></td>
+          <td><div class="myDIV"><%= json["precio"].to_s %></div></td>
+          <td><div class="myDIV"><%= json["precio_subs"].to_s %></div></td>
         </tr>
       <% end %>
     </tbody>

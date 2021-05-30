@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Optimizador dimensionamiento</title>
+  <style>
+    .currSign:before {
+        content: '$';
+    }
+  </style>
 </head>
 <body>
   <table  style="width:100%" align="left">
@@ -18,7 +23,17 @@
       </tr>
     </thead>
   </table>
-
+  <!-- Javascript code to format the
+           number as per the locale -->
+      <script>
+          let x = document.querySelectorAll(".myDIV");
+          for (let i = 0, len = x.length; i < len; i++) {
+              let num = Number(x[i].innerHTML)
+                        .toLocaleString('en');
+              x[i].innerHTML = num;
+              x[i].classList.add("currSign");
+          }
+      </script>
 
   <%= yield %>
 </body>
