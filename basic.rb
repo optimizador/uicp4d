@@ -4,6 +4,8 @@ require 'rest-client'
 set(:cookie_options) do
   { :expires => Time.now + 30*60 }
 end
+
+
 get '/' do
   logger = Logger.new(STDOUT)
   logger.info(request)
