@@ -13,12 +13,8 @@ get '/' do
 
 end
 
-get '/nombre' do
-  logger = Logger.new(STDOUT)
-  logger.info("Recibi lo siguiente #{params[:name]}")
-  @name = "#{params[:name]}"
-  response.set_cookie("llave2", value: "valor2")
-  erb :index
+get '/pxbackup' do
+  redirect "http://localhost:8090"
 end
 
 get '/cp4d' do
