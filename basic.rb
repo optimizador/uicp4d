@@ -20,10 +20,10 @@ get '/pxbackup' do
   #redirect "http://localhost:8090"
 end
 get '/iks' do
-  redirect "http://localhost:8090"
+  redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/iks"
 end
 get '/ocp' do
-  redirect "http://localhost:8090"
+  redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/ocp"
 end
 
 get '/cp4d' do
