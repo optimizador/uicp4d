@@ -16,6 +16,13 @@ get '/' do
 end
 
 get '/pxbackup' do
+  redirect "https://pxbackup.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
+  #redirect "http://localhost:8090"
+end
+get '/iks' do
+  redirect "http://localhost:8090"
+end
+get '/ocp' do
   redirect "http://localhost:8090"
 end
 
