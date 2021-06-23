@@ -24,6 +24,9 @@ get '/iks' do
 end
 get '/ocp' do
   redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/ocp"
+end 
+get '/cr' do
+  redirect "https://ui-cr.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
 end
 
 get '/cp4d' do
