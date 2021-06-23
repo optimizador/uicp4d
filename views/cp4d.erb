@@ -121,7 +121,7 @@ NOTAS:<br>
           <td><%= json["iops"].to_s %></td>
           <td><%= json["maxunit"].to_s %></td>
           <td><%= json["unidades"].to_s %></td>
-          <td><%= json["precio"].to_s %></td>
+          <td>$<%= json["precio"].to_s %> USD</td>
           <td><%= json["unidadrestante"].to_s %></td>
           <td><%= json["preciounidadrestante"].to_s %></td>
         </tr>
@@ -149,8 +149,8 @@ NOTAS:<br>
           <td><%= json["flavor"].to_s %></td>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
-          <td><div class="myDIV"><%= json["precio"].to_s %></div></td>
-          <td><div class="myDIV"><%= json["precio_subs"].to_s %></div></td>
+          <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
+          <td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td>
         </tr>
       <% end %>
     </tbody>
@@ -175,8 +175,8 @@ NOTAS:<br>
           <td><%= json["flavor"].to_s %></td>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
-          <td><%= json["precio"].to_s %></td>
-          <td><%= json["precio_subs"].to_s %></td>
+          <td>$<%= json["precio"].to_s %> USD</td>
+          <td>$<%= json["precio_subs"].to_s %> USD</td>
         </tr>
       <% end %>
     </tbody>
