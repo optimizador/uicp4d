@@ -15,6 +15,16 @@ get '/' do
 
 end
 
+get '/loganalysis' do
+  redirect "https://ui-monitoring.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/VATLA?"
+  #redirect "http://localhost:8090"
+end
+
+get '/monitoring' do
+  redirect "https://ui-monitoring.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/VLG?"
+  #redirect "http://localhost:8090"
+end
+
 get '/pxbackup' do
   redirect "https://pxbackup.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
   #redirect "http://localhost:8090"
@@ -24,7 +34,7 @@ get '/iks' do
 end
 get '/ocp' do
   redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/ocp"
-end 
+end
 get '/cr' do
   redirect "https://ui-cr.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
 end

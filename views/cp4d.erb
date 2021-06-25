@@ -139,8 +139,8 @@ NOTAS:<br>
         <th bgcolor="#00008B" style="color: white;">Flavor</th>
         <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
         <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) </th>
-        <th bgcolor="#00008B" style="color: white;">Precio  Mensual (USD) con Subscripción OCP</th>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
+        <!--th bgcolor="#00008B" style="color: white;">Precio  Mensual (USD) con Subscripción OCP</th-->
       </tr>
     </thead>
     <tbody>
@@ -150,7 +150,7 @@ NOTAS:<br>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
           <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
-          <td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td>
+          <!--td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td-->
         </tr>
       <% end %>
     </tbody>
@@ -165,8 +165,8 @@ NOTAS:<br>
         <th bgcolor="#00008B" style="color: white;">Flavor</th>
         <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
         <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) </th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) con Subscripción OCP</th>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
+        <!--th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) con Subscripción OCP</th-->
       </tr>
     </thead>
     <tbody>
@@ -176,7 +176,7 @@ NOTAS:<br>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
           <td>$<%= json["precio"].to_s %> USD</td>
-          <td>$<%= json["precio_subs"].to_s %> USD</td>
+          <!--td>$<%= json["precio_subs"].to_s %> USD</td-->
         </tr>
       <% end %>
     </tbody>
