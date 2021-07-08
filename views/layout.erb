@@ -2,27 +2,83 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Optimizador dimensionamiento</title>
   <style>
     .currSign:before {
         content: '$';
     }
   </style>
+  <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet">
+  <link href="css/plugins/iCheck/custom.css" type="text/css" rel="stylesheet">
+  <link href="css/animate.css" type="text/css" rel="stylesheet">
+  <link href="css/style.css" type="text/css" rel="stylesheet">
+
+  <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-  <table  style="width:100%" align="left">
-    <thead>
-      <tr>
-        <th >
-          <object type="image/svg+xml" data="image.svg">
-            <!-- Your fall back here -->
-            <img width="150" height="60" src="https://www.prime-alliance.org/wp-content/uploads/2020/11/IBM-LOGO.png" />
-          </object>
-        </th>
-        <th ><h1>Dimensionamiento Orquestadores de Contenedores</h1></th>
-      </tr>
-    </thead>
-  </table>
+  <div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element"> <span>
+                            <img width="150" height="60" src="https://www.prime-alliance.org/wp-content/uploads/2020/11/IBM-LOGO.png" />
+                             </span>
+
+                    </div>
+                    <div class="logo-element">
+                        <img width="60" height="24" src="https://www.prime-alliance.org/wp-content/uploads/2020/11/IBM-LOGO.png" />
+                    </div>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Cloud Paks</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/cp4d">Cloud Pak for Data</a></li>
+                        <li><a href="/pxbackup">Respaldos IKS/Openshift con PX-Backup</a></li>
+                        <li><a href="/loganalysis">Monitoreo Logs (Log Analysis/Activity Tracker)</a></li>
+                        <li><a href="/monitoring">Monitoreo Salud (Monitoring)</a></li>
+                        <li><a href="/uiga">Comunicaciones con Gateway Appliance</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Orquestadores</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/iks">Kubernetes Service (IKS)</a></li>
+                        <li><a href="/ocp">Openshift Kubernetes Service (ROKS)</a></li>
+                        <li><a href="/cr">Container Registry</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+
+            </div>
+
+
+        </nav>
+        </div>
+
+        <div class="row wrapper wrapper-content animated fadeInRight">
+        <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-12 text-center">
+                    <h2>Dimensionamiento Orquestadores de Contenedores</h2>
+
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+        <br>
   <!-- Javascript code to format the
            number as per the locale -->
       <script>
@@ -36,5 +92,17 @@
       </script>
 
   <%= yield %>
+  <!-- Mainly scripts -->
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="./js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="./js/inspinia.js"></script>
+    <script src="./js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="./js/plugins/iCheck/icheck.min.js"></script>
 </body>
 </html>
