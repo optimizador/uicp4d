@@ -5,7 +5,10 @@ set(:cookie_options) do
   { :expires => Time.now + 30*60 }
 end
 
-
+#************
+#Copiar y actualizar en cada módulo
+# ***Adaptar para que no se reescriban las rutas del módulo en particular donde se despliegue
+#************
 get '/' do
   logger = Logger.new(STDOUT)
   logger.info(request)
@@ -41,6 +44,10 @@ end
 get '/cr' do
   redirect "https://ui-cr.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
 end
+#************
+#Fin Copiar y actualizar en cada módulo
+#************
+
 
 get '/cp4d' do
   logger = Logger.new(STDOUT)
@@ -52,6 +59,8 @@ get '/cp4d' do
   response.set_cookie("llave2", value: "valor2")
     erb :cp4d , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
 end
+
+
 
 get '/cp4drespuesta' do
 
