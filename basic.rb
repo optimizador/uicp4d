@@ -17,6 +17,9 @@ get '/' do
   erb :index
 
 end
+get '/uidl' do
+  redirect "https://ui-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/uidl"
+end
 get '/uiga' do
   redirect "https://ui-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/uiga"
   #redirect "http://localhost:8090"
