@@ -12,7 +12,7 @@ end
 get '/' do
   logger = Logger.new(STDOUT)
   logger.info(request)
-  response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+  #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
   erb :index
 
 end
@@ -58,7 +58,7 @@ get '/cp4d' do
   respuestasizing=[]
   respuestasizingalt=[]
   respuestastorage=[]
-  response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+  #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
   erb :cp4d , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
 end
 
@@ -89,6 +89,6 @@ get '/cp4drespuesta' do
   logger.info(respuestastorage)
 
   #erb :cp4d , :locals => {:respuestasizing => params[:respuestasizing]}
-  response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+  #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
   erb :cp4d , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
 end
