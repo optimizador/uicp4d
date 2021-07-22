@@ -69,26 +69,51 @@ get '/cp4drespuesta' do
   logger = Logger.new(STDOUT)
   logger.info("Recibiendo parametros para dimensionamiento de CP4D: CPU: #{params[:cpu]} RAM: #{params[:ram]} Storage: #{params[:storage]} IOPS #{params[:iops]}")
   @name = "CP4D-Dimensionamiento"
-  urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
-  #urlapi="http://localhost:8080"
+  #urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
+  urlapi="http://localhost:8080"
   cpu="#{params['cpu']}"
   ram="#{params['ram']}"
+  infra_type="#{params['infra_type']}"
+  region="#{params['region']}"
   storage="#{params['storage']}"
   iops="#{params['iops']}"
 
   #parametros recibidos
-  respuestasizing = RestClient.get "#{urlapi}/api/v1/sizingclusteroptimo?cpu='#{cpu}'&ram='#{ram}'&region=mexico", {:params => {}}
+  logger.info("PRIMER LLAMADO DE API #{urlapi}/api/v2/sizingclusteroptimo?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}")
+  respuestasizing = RestClient.get "#{urlapi}/api/v2/sizingclusteroptimo?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}", {:params => {}}
   respuestasizing=JSON.parse(respuestasizing.to_s)
   logger.info(respuestasizing)
-  respuestasizingalt = RestClient.get "#{urlapi}/api/v1/sizingcluster?cpu='#{cpu}'&ram='#{ram}'&region=mexico", {:params => {}}
+  logger.info("SEGUNDO LLAMADO DE API #{urlapi}/api/v2/sizingcluster?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}")
+  respuestasizingalt = RestClient.get "#{urlapi}/api/v2/sizingcluster?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}", {:params => {}}
   respuestasizingalt=JSON.parse(respuestasizingalt.to_s)
   logger.info(respuestasizingalt)
-
-  respuestastorage = RestClient.get "#{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=mexico", {:params => {}}
+  logger.info("TERCER LLAMADO DE API #{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}")
+  respuestastorage = RestClient.get "#{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}", {:params => {}}
   respuestastorage=JSON.parse(respuestastorage.to_s)
   logger.info(respuestastorage)
-
+  logger.info("TERMINO DE LLAMAR LOS APIS")
   #erb :cp4d , :locals => {:respuestasizing => params[:respuestasizing]}
   #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
   erb :cp4d , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
 end
+
+  get '/cp4dtemplate' do
+    logger = Logger.new(STDOUT)
+    logger.info("Selecciono dimensionamiento para template de CP4D")
+    @name = "CP4D"
+    respuestasizing=[]
+    respuestasizingalt=[]
+    respuestastorage=[]
+    #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+    erb :cp4dtemplate , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
+  end
+  get '/cp4dtemplaterespuesta' do
+    logger = Logger.new(STDOUT)
+    logger.info("Selecciono dimensionamiento para template de CP4D")
+    @name = "CP4D"
+    respuestasizing=[]
+    respuestasizingalt=[]
+    respuestastorage=[]
+    #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+    erb :cp4dtemplate , :locals => {:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
+  end

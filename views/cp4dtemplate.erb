@@ -2,7 +2,7 @@
   "$#{num.gsub(/\d(?=(...)+$)/, '\0,')}"
 end
 %>
-<p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
+<p>Vamos a dimensionar tú ambiente para CP4D en IBM Cloud, llena los parámetros de configuración</p>
 
 <p>
 <form action="/" method="get">
@@ -77,10 +77,8 @@ NOTAS:<br>
             <tr>
               <td>Tipo Infraestructura</td>
               <td>
-                <select name="infra_type" id="infra_type">
+                <select name="tipoinfra" id="tipoinfra">
                   <option value="shared">Compartida</option>
-                  <option value="dedicated">Dedicada</option>
-                  <option value="bm">Bare Metal</option>
                 </select>
               </td>
         </table>
