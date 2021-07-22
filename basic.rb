@@ -69,8 +69,8 @@ get '/cp4drespuesta' do
   logger = Logger.new(STDOUT)
   logger.info("Recibiendo parametros para dimensionamiento de CP4D: CPU: #{params[:cpu]} RAM: #{params[:ram]} Storage: #{params[:storage]} IOPS #{params[:iops]}")
   @name = "CP4D-Dimensionamiento"
-  #urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
-  urlapi="http://localhost:8080"
+  urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
+  #urlapi="http://localhost:8080"
   cpu="#{params['cpu']}"
   ram="#{params['ram']}"
   infra_type="#{params['infra_type']}"
