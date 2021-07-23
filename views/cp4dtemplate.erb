@@ -1,32 +1,77 @@
-<%def money(num)
-  "$#{num.gsub(/\d(?=(...)+$)/, '\0,')}"
-end
-%>
-<p>Vamos a dimensionar tú ambiente para CP4D en IBM Cloud, llena los parámetros de configuración</p>
 
-<p>
-<form action="/" method="get">
-<button type="submit"> <-- Regresar </button>
-</form>
-</p>
-<p style="font-style: italic;">
-NOTAS:<br>
-*Los precios lista que se presentarán son calculados y pueden variar respecto a los presentados en IBM Cloud en +-1%<br>
-**Para procesos de special bid es requerido obtener los precios lista desde cloud.ibm.com<br>
-</p>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
 
-<form action="/cp4drespuesta" method="get">
 
-<table style="width:100%" align="left">
+<div class="ibox-content">
+<form action="/cp4dtemplaterespuesta" method="get">
+
+<table style="width:100%" align="left"  class="table table-stripped">
   <tr>
-    <th bgcolor="#00008B" style="color: white; width:50%" >Parámetros Clúster</th>
+    <th bgcolor="#00008B" style="color: white;">Ambiente no productivo CP4D</th>
   </tr>
   <tr>
     <td>
+      <!-- tabla parametros del clúster -->
+      <table style="width:100%" align="left" colspan="2" class="table table-stripped">
+        <tr>
+          <th bgcolor="#00008B" style="color: white;">Parámetros Generales de la solución</th>
+          <th bgcolor="#00008B" style="color: white;">Valor</th>
+        </tr>
+
+        <tr>
+          <!--td>Tipo de Configuración</td>
+          <td>
+             <button type="button" id="btn_CP4DNonProd" OnClick="nonprod()" class="btn btn-outline btn-primary">No Productivo</button>
+          </td>
+        </tr-->
+
+        <tr>
+          <td>Región</td>
+          <td>
+            <select name="region" id="region">
+              <option value="mexico">México</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Precios del País</td>
+          <td>
+            <select name="preciopais" id="preciopais">
+              <option value="mexico">México</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Tipo de Soporte</td>
+          <td>
+            <select name="tiposoporte" id="tiposoporte">
+              <option value="advanced" selected>Advanced</option>
+              <option value="premium">Premium</option>
+            </select>
+          </td>
+        </tr>
+        <td>
+          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habRespaldos()">Incluir Respaldos<br>
+          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habLogs()">Incluir Monitoreo de Logs<br>
+          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habSalud()">Incluir Monitoreo de Salud<br>
+          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habAuditoria()">Incluir Trazas de Auditoria<br>
+          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habGateways()">Incluir Appliances de comunicaciones<br>
+          </td>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
         <!-- tabla parametros del clúster -->
-        <table style="width:100%" align="left">
+        <table style="width:100%" align="left" class="table table-stripped">
           <tr>
-            <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+            <th bgcolor="#00008B" style="color: white;">Parámetros Clúster</th>
             <th bgcolor="#00008B" style="color: white;">Valor</th>
           </tr>
           <tr>
@@ -44,7 +89,8 @@ NOTAS:<br>
           <tr>
             <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
             <td>
-              <label for="Almacenamiento Filestorage (GB)"><input type="number" id="storage" name="storage">
+              <label for="Almacenamiento Filestorage (GB)">
+                <input type="number" id="storage" onchange="cambiostorage()" name="storage">
             </td>
           </tr>
           <tr>
@@ -53,82 +99,325 @@ NOTAS:<br>
               <select name="iops" id="iops">
                 <option value=".25">.25</option>
                 <option value="2">2</option>
-                <option value="4">4</option>
+                <option value="4" selected="selected">4</option>
                 <option value="10">10</option>
               </select>
             </td>
           </tr>
           <tr>
-            <td>Región</td>
-            <td>
-              <select name="region" id="region">
-                <option value="mexico">México</option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td>Precios del País</td>
-            <td>
-              <select name="preciopais" id="preciopais">
-                <option value="mexico">México</option>
-              </select>
-            </td>
-            <tr>
               <td>Tipo Infraestructura</td>
               <td>
-                <select name="tipoinfra" id="tipoinfra">
-                  <option value="shared">Compartida</option>
+                <select name="infra_type" id="infra_type">
+                  <option value="shared" selected>Compartida</option>
+                  <option value="dedicated">Dedicada</option>
+                  <option value="bm">Bare Metal</option>
                 </select>
               </td>
+          </tr>
         </table>
 
 
     </td>
   </tr>
   <tr>
-    <th bgcolor="#00008B" style="color: white; width:50%" >Parámetros Respaldos</th>
+    <td>
+      <!-- tabla parametros del respaldo-->
+    <table style="width:100%" align="left" id="trespaldos" name="trespaldos" class="table table-stripped">
+      <tr>
+        <th bgcolor="#00008B" style="color: white;">Parámetro de respaldos</th>
+        <th bgcolor="#00008B" style="color: white;">Valor</th>
+      </tr>
+      <tr>
+        <td>Volumen a respaldar entre Persistent Volumes y archivos YAML(GB): </td>
+        <td><input type="number" id="almacenamientogb" name="almacenamientogb"></td>
+      </tr>
+      <tr>
+        <td>Región Almacenamiento de Respaldos: </td>
+        <td><select name="countryrespaldo" id="countryrespaldo">
+          <option value="mexico">México</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>Resiliencia del respaldo: </td>
+        <td><select name="resiliencybackup" id="resiliencybackup">
+          <option value="single">Single Region</option>
+        </select></td>
+      </tr>
+      </table>
+    </td>
+    </tr>
+    <tr>
+    <td coolspan="2" style="width:60%">
+      <table style="width:100%" align="left"  id="tpoliticas" name="tpoliticas" class="table table-stripped">
+      <tr>
+        <td colspan="2" bgcolor="#00008B" style="color: white;">Políticas de Respaldo</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <table style="width:100%" align="left" class="table table-stripped">
+            <tr>
+              <th bgcolor="#00008B" style="color: white;">Tipo Respaldo</th>
+              <th bgcolor="#00008B" style="color: white;">Incluir</th>
+              <th bgcolor="#00008B" style="color: white;">Máximo de respaldos dentro de un mes</th>
+            </tr>
+            <tr>
+              <td>Semanal</td>
+                <td>
+                  <input type="checkbox" name="rsemanal" id="rsemanal" value=true checked>Si<br>
+                  </td>
+              <td>
+                <input type="number" id="rsemanalretencion" name="rsemanalretencion" value=2>
+              </td>
+            </tr>
+            <tr>
+              <td>Diarios</td>
+              <td>
+                <input type="checkbox" name="rdiario" id="rdiario" value=true>Si<br>
+                </td>
+              <td>
+                <input type="number" id="rdiarioretencion" name="rdiarioretencion">
+              </td>
+            </tr>
+            <tr>
+              <td>Mensuales</td>
+              <td>
+                <input type="checkbox" name="rmensual" id="rmensual" value=true>Si<br>
+                </td>
+              <td>
+                <input type="number" id="rmensualretencion" name="rmensualretencion">
+              </td>
+            </tr>
+            <tr>
+              <td>Anuales</td>
+              <td>
+                <input type="checkbox" name="ranual" id="ranual" value=true>Si<br>
+                </td>
+              <td>
+                <input type="number" id="ranualretencion" name="ranualretencion">
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <!-- tabla parametros del gateway -->
+      <table style="width:100%" align="left" id="tcomms" name="tcomms" class="table table-stripped">
+        <tr>
+          <th bgcolor="#00008B" style="color: white;">Parámetros de comunicaciones</th>
+          <th bgcolor="#00008B" style="color: white;">Valor</th>
+        </tr>
+        <tr>
+          <td>Tipo de Gateway</td>
+          <td>
+            <select name="type" id="type">
+              <option value="strong">Strong Swan</option>
+              <option value="vyatta">Vyatta</option>
+              <option value="juniper">Juniper</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Interfase de Red</td>
+          <td>
+            <select name="interfase" id="interfase">
+              <option value="1">1 Gbps</option>
+              <option value="10">10 Gbps</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Manejo de información sensible<br>
+          <i><small>Vyatta no dispone de módulo IPS</small></i></td>
+          <td>
+            <input type="hidden" name="pii" value=false />
+            <input type="checkbox" name="pii" id="pii" value=true>Si<br>
+            </td>
+        </tr>
+        <tr>
+          <td>Requiere Alta Disponibilidad</td>
+          <td>
+            <input type="hidden" name="ha" value=false />
+            <input type="checkbox" name="ha" id="ha" value=true>Si<br>
+            </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table style="width:100%" bgcolor="#00008B" id="tauditoria" name="tauditoria" align="left" class="table table-stripped">
+        <tr>
+          <th colspan=2 bgcolor="#00008B" style="color: white;">Parámetros de Activity Tracker</th>
+        </tr>
+        <tr>
+          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+          <th bgcolor="#00008B" style="color: white;">Valor</th>
+        </tr>
+         <tr>
+          <td >Almacenamiento (GB)</td>
+          <td>
+          <input type="number" name="atracker" id="atracker" autofocus placeholder="GB">
+          </td>
+        </tr>
+        <tr>
+         <td >Tiempo de retención</td>
+         <td>
+           <select name="atracker_retencion" id="atracker_retencion">
+             <option value="7">7 días</option>
+             <option value="14">14 días</option>
+             <option value="30">30 días</option>
+             <option value="30hipaa">30 días HIPAA</option>
+           </select>
+         </td>
+       </tr>
+      </table>
+    </td>
   </tr>
 
+  <tr>
+    <td>
+      <table style="width:100%" bgcolor="#00008B" id="tlogs" name="tlogs" align="left" class="table table-stripped">
+        <tr>
+          <th colspan=2 bgcolor="#00008B" style="color: white;">Parámetros de Log Analysis</th>
+        </tr>
+        <tr>
+          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+          <th bgcolor="#00008B" style="color: white;">Valor</th>
+        </tr>
+         <tr>
+          <td >Almacenamiento (GB)</td>
+          <td>
+          <input type="number" name="aloganalysis" id="aloganalysis" autofocus placeholder="GB">
+          </td>
+        </tr>
+        <tr>
+         <td >Tiempo de retención</td>
+         <td>
+           <select name="aloganalysis_retencion" id="aloganalysis_retencion">
+             <option value="7">7 días</option>
+             <option value="14">14 días</option>
+             <option value="30">30 días</option>
+             <option value="30hipaa">30 días HIPAA</option>
+           </select>
+         </td>
+       </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+
+      <!-- tabla parametros del clúster -->
+      <table style="width:100%" bgcolor="#00008B" id="tsalud" name="tsalud" align="center" class="table table-stripped">
+        <tr>
+          <th bgcolor="#00008B" style="color: white;" >Parámetros Cloud Monitoring</th>
+          <th bgcolor="#00008B" style="color: white;">Valor</th>
+        </tr>
+         <!--tr>
+          <td style="" align="center">Node</td>
+          <td>
+          <input type="number" name="" id="N" autofocus placeholder="Node"> </td>
+        </tr>
+
+        <tr>
+          <td style="" align="center">Lite node</td>
+          <td>
+          <input type="number" name="" id="NL" autofocus placeholder="Lite node">
+        </td>
+      </tr-->
+
+          <tr>
+          <td style="" align="center">Container</td>
+          <td>
+          <input type="number" name="" id="CH" autofocus placeholder="Container" value=300>
+        </td>
+        </tr>
+
+
+
+          <!--tr>
+          <td style="" align="center">API Call</td>
+          <td>
+          <input type="number" name="" id="API" autofocus placeholder="API´s">
+        </td>
+      </tr-->
+
+
+          <tr>
+          <td style="" align="center">Time series hour</td>
+          <td>
+          <input type="number" name="" id="ST" autofocus placeholder="Time series" value=10>
+        </td>
+        </tr>
+
+
+        <tr>
+          <td style="" align="center">Región</td>
+          <td>
+            <select name="region" id="region">
+             <option value="mexico" selected>US-South</option>
+              <option value="mexico">Us-East</option>
+
+            </select>
+          </td>
+        </tr>
+        </table>
+
+    </td>
+  </tr>
+
+
 </table>
-
-
-
 <p>
 <button type="submit">Quiero mi dimensionamiento</button>
 </p>
-
-
-
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>
 <!--%=respuestastorage%-->
 <% if (respuestastorage != nil and respuestastorage.size>0) then%>
 <h3>Dimensionamiento Almacenamiento</h3>
   <table  style="width:100%" align="left">
     <thead>
       <tr>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidad Restante</th>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidades</th>
         <th bgcolor="#00008B" style="color: white;">IOPS/GB</th>
         <th bgcolor="#00008B" style="color: white;">Tamaño máximo</th>
         <th bgcolor="#00008B" style="color: white;">Unidades de Tamaño Máximo</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidades</th>
         <th bgcolor="#00008B" style="color: white;">Unidad Restante</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidad Restante</th>
+
       </tr>
     </thead>
     <tbody>
       <% respuestastorage.each do |json| %>
         <tr>
+          <td>$<%= json["preciounidadrestante"].to_s %> USD</td>
+          <td><%= json["unidades"].to_s %></td>
           <td><%= json["iops"].to_s %></td>
           <td><%= json["maxunit"].to_s %></td>
-          <td><%= json["unidades"].to_s %></td>
           <td>$<%= json["precio"].to_s %> USD</td>
           <td><%= json["unidadrestante"].to_s %></td>
-          <td>$<%= json["preciounidadrestante"].to_s %> USD</td>
+
         </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
+
+
 
 <!--%=respuestastorage%-->
 <% if (respuestasizing != nil and respuestasizing.size>0) then%>
@@ -136,20 +425,21 @@ NOTAS:<br>
   <table  style="width:100%" align="left">
     <thead>
       <tr>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
         <th bgcolor="#00008B" style="color: white;">Flavor</th>
         <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
         <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
+
         <!--th bgcolor="#00008B" style="color: white;">Precio  Mensual (USD) con Subscripción OCP</th-->
       </tr>
     </thead>
     <tbody>
       <% respuestasizing.each do |json| %>
         <tr>
+          <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
           <td><%= json["flavor"].to_s %></td>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
-          <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
           <!--td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td-->
         </tr>
       <% end %>
@@ -162,23 +452,88 @@ NOTAS:<br>
   <table  style="width:100%" align="left">
     <thead>
       <tr>
+        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
         <th bgcolor="#00008B" style="color: white;">Flavor</th>
         <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
         <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
         <!--th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) con Subscripción OCP</th-->
       </tr>
     </thead>
     <tbody>
       <% respuestasizingalt.each do |json| %>
         <tr>
+          <td>$<%= json["precio"].to_s %> USD</td>
           <td><%= json["flavor"].to_s %></td>
           <td><%= json["infra_type"].to_s %></td>
           <td><%= json["workers"].to_s %></td>
-          <td>$<%= json["precio"].to_s %> USD</td>
           <!--td>$<%= json["precio_subs"].to_s %> USD</td-->
         </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
+
+<script>
+  function habRespaldos()
+  {
+    if (this.checked)
+    {
+      document.getElementById("trespaldos").style.visibility = "visible";;
+      document.getElementById("tpoliticas").style.visibility = "visible";;
+    }
+    else
+    {
+        document.getElementById("trespaldos").style.visibility = "hidden";
+        document.getElementById("tpoliticas").style.visibility = "hidden";
+    }
+  }
+  function habLogs()
+  {
+    if (this.checked)
+    {
+      document.getElementById("trespaldos").show();
+      document.getElementById("tpoliticas").show();
+    }
+    else
+    {
+        document.getElementById("trespaldos").hide();
+        document.getElementById("tpoliticas").hide();
+    }
+  }
+  function habSalud()
+  {
+
+  }
+  function habAuditoria()
+  {
+
+  }
+  function habGateways()
+  {
+    if (this.checked==true)
+    {
+      document.getElementById("tcomms").style.visibility = "visible";
+
+    }
+    else
+    {
+        document.getElementById("tcomms").style.visibility = "hidden";
+
+    }
+
+  }
+
+  function cambiostorage()
+  {
+    document.getElementById("almacenamientogb").value=document.getElementById("storage").value;
+  };
+  function nonprod()
+  {
+    document.getElementById("tiposoporte").value="advanced";
+    document.getElementById("iops").value=4;
+    document.getElementById("infra_type").value="shared";
+    document.getElementById("rsemanal").checked=true;
+    document.getElementById("rsemanalretencion").value=2;
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
