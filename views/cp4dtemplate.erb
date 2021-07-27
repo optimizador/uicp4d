@@ -1,539 +1,924 @@
 
-<div class="wrapper wrapper-content animated fadeInRight">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="ibox float-e-margins">
-
-
-<div class="ibox-content">
 <form action="/cp4dtemplaterespuesta" method="get">
 
-<table style="width:100%" align="left"  class="table table-stripped">
-  <tr>
-    <th bgcolor="#00008B" style="color: white;">Ambiente no productivo CP4D</th>
-  </tr>
-  <tr>
-    <td>
-      <!-- tabla parametros del clúster -->
-      <table style="width:100%" align="left" colspan="2" class="table table-stripped">
-        <tr>
-          <th bgcolor="#00008B" style="color: white;">Parámetros Generales de la solución</th>
-          <th bgcolor="#00008B" style="color: white;">Valor</th>
-        </tr>
 
-        <tr>
-          <!--td>Tipo de Configuración</td>
-          <td>
-             <button type="button" id="btn_CP4DNonProd" OnClick="nonprod()" class="btn btn-outline btn-primary">No Productivo</button>
-          </td>
-        </tr-->
+<!-- Parametros generales de la solución -->
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Ambiente no productivo CP4D</h5>
 
-        <tr>
-          <td>Región</td>
-          <td>
-            <select name="region" id="region">
-              <option value="mexico">México</option>
-            </select>
-          </td>
-        </tr>
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                  </div>
 
-        <tr>
-          <td>Precios del País</td>
-          <td>
-            <select name="preciopais" id="preciopais">
-              <option value="mexico">México</option>
-            </select>
-          </td>
-        </tr>
+                  <div class="ibox-content">
+                  <table style="width:100%" align="left" colspan="2"  class="footable table table-stripped toggle-arrow-tiny">
+                    <thead>
+                    <tr>
+                      <th bgcolor="#00008B" style="color: white;">Parámetros Generales de la solución</th>
+                      <th bgcolor="#00008B" style="color: white;">Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>Región</td>
+                      <td>
+                        <select name="region" id="region">
+                          <option value="mexico">México</option>
+                        </select>
+                      </td>
+                    </tr>
 
-        <tr>
-          <td>Tipo de Soporte</td>
-          <td>
-            <select name="tiposoporte" id="tiposoporte">
-              <option value="advanced" selected>Advanced</option>
-              <option value="premium">Premium</option>
-            </select>
-          </td>
-        </tr>
-        <td>
-          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habRespaldos()">Incluir Respaldos<br>
-          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habLogs()">Incluir Monitoreo de Logs<br>
-          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habSalud()">Incluir Monitoreo de Salud<br>
-          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habAuditoria()">Incluir Trazas de Auditoria<br>
-          <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habGateways()">Incluir Appliances de comunicaciones<br>
-          </td>
-      </table>
-    </td>
-  </tr>
+                    <tr>
+                      <td>Precios del País</td>
+                      <td>
+                        <select name="preciopais" id="preciopais">
+                          <option value="mexico">México</option>
+                        </select>
+                      </td>
+                    </tr>
 
-  <tr>
-    <td>
-        <!-- tabla parametros del clúster -->
-        <table style="width:100%" align="left" class="table table-stripped">
-          <tr>
-            <th bgcolor="#00008B" style="color: white;">Parámetros Clúster</th>
-            <th bgcolor="#00008B" style="color: white;">Valor</th>
-          </tr>
-          <tr>
-            <td>CPU</td>
-            <td>
-              <label for="cpu"><input type="number" id="cpu" name="cpu">
-            </td>
-          </tr>
-          <tr>
-            <td>RAM (GB)</td>
-            <td>
-              <label for="RAM (GB)"><input type="number" id="ram" name="ram">
-            </td>
-          </tr>
-          <tr>
-            <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
-            <td>
-              <label for="Almacenamiento Filestorage (GB)">
-                <input type="number" id="storage" onchange="cambiostorage()" name="storage">
-            </td>
-          </tr>
-          <tr>
-            <td>IOPS Almacenamiento</td>
-            <td>
-              <select name="iops" id="iops">
-                <option value=".25">.25</option>
-                <option value="2">2</option>
-                <option value="4" selected="selected">4</option>
-                <option value="10">10</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-              <td>Tipo Infraestructura</td>
-              <td>
-                <select name="infra_type" id="infra_type">
-                  <option value="shared" selected>Compartida</option>
-                  <option value="dedicated">Dedicada</option>
-                  <option value="bm">Bare Metal</option>
-                </select>
-              </td>
-          </tr>
-        </table>
+                    <tr>
+                      <td>Tipo de Soporte</td>
+                      <td>
+                        <select name="tiposoporte" id="tiposoporte">
+                          <option value="advanced" selected>Advanced</option>
+                          <option value="premium">Premium</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <td>
+                      <input type="checkbox" name="increspaldos" id="increspaldos" value=true onchange="habRespaldos()">Incluir Respaldos<br>
+                      <input type="checkbox" name="inclogs" id="inclogs" value=true onchange="habLogs()">Incluir Monitoreo de Logs<br>
+                      <input type="checkbox" name="incsalud" id="incsalud" value=true onchange="habSalud()">Incluir Monitoreo de Salud<br>
+                      <input type="checkbox" name="incauditoria" id="incauditoria" value=true onchange="habAuditoria()">Incluir Trazas de Auditoria<br>
+                      <input type="checkbox" name="incga" id="incga" value=true onchange="habGateways()">Incluir Appliances de comunicaciones<br>
+                      <input type="checkbox" name="incdl" id="incdl" value=true onchange="habEnlaces()">Incluir Enlaces Dedicados<br>
+                      </td>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
 
-
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <!-- tabla parametros del respaldo-->
-    <table style="width:100%" align="left" id="trespaldos" name="trespaldos" class="table table-stripped">
-      <tr>
-        <th bgcolor="#00008B" style="color: white;">Parámetro de respaldos</th>
-        <th bgcolor="#00008B" style="color: white;">Valor</th>
-      </tr>
-      <tr>
-        <td>Volumen a respaldar entre Persistent Volumes y archivos YAML(GB): </td>
-        <td><input type="number" id="almacenamientogb" name="almacenamientogb"></td>
-      </tr>
-      <tr>
-        <td>Región Almacenamiento de Respaldos: </td>
-        <td><select name="countryrespaldo" id="countryrespaldo">
-          <option value="mexico">México</option>
-        </select></td>
-      </tr>
-      <tr>
-        <td>Resiliencia del respaldo: </td>
-        <td><select name="resiliencybackup" id="resiliencybackup">
-          <option value="single">Single Region</option>
-        </select></td>
-      </tr>
-      </table>
-    </td>
-    </tr>
-    <tr>
-    <td coolspan="2" style="width:60%">
-      <table style="width:100%" align="left"  id="tpoliticas" name="tpoliticas" class="table table-stripped">
-      <tr>
-        <td colspan="2" bgcolor="#00008B" style="color: white;">Políticas de Respaldo</td>
-      </tr>
-      <tr>
-        <td colspan="2">
-
-          <table style="width:100%" align="left" class="table table-stripped">
-            <tr>
-              <th bgcolor="#00008B" style="color: white;">Tipo Respaldo</th>
-              <th bgcolor="#00008B" style="color: white;">Incluir</th>
-              <th bgcolor="#00008B" style="color: white;">Máximo de respaldos dentro de un mes</th>
-            </tr>
-            <tr>
-              <td>Semanal</td>
-                <td>
-                  <input type="checkbox" name="rsemanal" id="rsemanal" value=true checked>Si<br>
-                  </td>
-              <td>
-                <input type="number" id="rsemanalretencion" name="rsemanalretencion" value=2>
-              </td>
-            </tr>
-            <tr>
-              <td>Diarios</td>
-              <td>
-                <input type="checkbox" name="rdiario" id="rdiario" value=true>Si<br>
-                </td>
-              <td>
-                <input type="number" id="rdiarioretencion" name="rdiarioretencion">
-              </td>
-            </tr>
-            <tr>
-              <td>Mensuales</td>
-              <td>
-                <input type="checkbox" name="rmensual" id="rmensual" value=true>Si<br>
-                </td>
-              <td>
-                <input type="number" id="rmensualretencion" name="rmensualretencion">
-              </td>
-            </tr>
-            <tr>
-              <td>Anuales</td>
-              <td>
-                <input type="checkbox" name="ranual" id="ranual" value=true>Si<br>
-                </td>
-              <td>
-                <input type="number" id="ranualretencion" name="ranualretencion">
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <!-- tabla parametros del gateway -->
-      <table style="width:100%" align="left" id="tcomms" name="tcomms" class="table table-stripped">
-        <tr>
-          <th bgcolor="#00008B" style="color: white;">Parámetros de comunicaciones</th>
-          <th bgcolor="#00008B" style="color: white;">Valor</th>
-        </tr>
-        <tr>
-          <td>Tipo de Gateway</td>
-          <td>
-            <select name="type" id="type">
-              <option value="strong">Strong Swan</option>
-              <option value="vyatta">Vyatta</option>
-              <option value="juniper">Juniper</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Interfase de Red</td>
-          <td>
-            <select name="interfase" id="interfase">
-              <option value="1">1 Gbps</option>
-              <option value="10">10 Gbps</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Manejo de información sensible<br>
-          <i><small>Vyatta no dispone de módulo IPS</small></i></td>
-          <td>
-            <input type="hidden" name="pii" value=false />
-            <input type="checkbox" name="pii" id="pii" value=true>Si<br>
-            </td>
-        </tr>
-        <tr>
-          <td>Requiere Alta Disponibilidad</td>
-          <td>
-            <input type="hidden" name="ha" value=false />
-            <input type="checkbox" name="ha" id="ha" value=true>Si<br>
-            </td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table style="width:100%" bgcolor="#00008B" id="tauditoria" name="tauditoria" align="left" class="table table-stripped">
-        <tr>
-          <th colspan=2 bgcolor="#00008B" style="color: white;">Parámetros de Activity Tracker</th>
-        </tr>
-        <tr>
-          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
-          <th bgcolor="#00008B" style="color: white;">Valor</th>
-        </tr>
-         <tr>
-          <td >Almacenamiento (GB)</td>
-          <td>
-          <input type="number" name="atracker" id="atracker" autofocus placeholder="GB">
-          </td>
-        </tr>
-        <tr>
-         <td >Tiempo de retención</td>
-         <td>
-           <select name="atracker_retencion" id="atracker_retencion">
-             <option value="7">7 días</option>
-             <option value="14">14 días</option>
-             <option value="30">30 días</option>
-             <option value="30hipaa">30 días HIPAA</option>
-           </select>
-         </td>
-       </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <table style="width:100%" bgcolor="#00008B" id="tlogs" name="tlogs" align="left" class="table table-stripped">
-        <tr>
-          <th colspan=2 bgcolor="#00008B" style="color: white;">Parámetros de Log Analysis</th>
-        </tr>
-        <tr>
-          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
-          <th bgcolor="#00008B" style="color: white;">Valor</th>
-        </tr>
-         <tr>
-          <td >Almacenamiento (GB)</td>
-          <td>
-          <input type="number" name="aloganalysis" id="aloganalysis" autofocus placeholder="GB">
-          </td>
-        </tr>
-        <tr>
-         <td >Tiempo de retención</td>
-         <td>
-           <select name="aloganalysis_retencion" id="aloganalysis_retencion">
-             <option value="7">7 días</option>
-             <option value="14">14 días</option>
-             <option value="30">30 días</option>
-             <option value="30hipaa">30 días HIPAA</option>
-           </select>
-         </td>
-       </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-
-      <!-- tabla parametros del clúster -->
-      <table style="width:100%" bgcolor="#00008B" id="tsalud" name="tsalud" align="center" class="table table-stripped">
-        <tr>
-          <th bgcolor="#00008B" style="color: white;" >Parámetros Cloud Monitoring</th>
-          <th bgcolor="#00008B" style="color: white;">Valor</th>
-        </tr>
-         <!--tr>
-          <td style="" align="center">Node</td>
-          <td>
-          <input type="number" name="" id="N" autofocus placeholder="Node"> </td>
-        </tr>
-
-        <tr>
-          <td style="" align="center">Lite node</td>
-          <td>
-          <input type="number" name="" id="NL" autofocus placeholder="Lite node">
-        </td>
-      </tr-->
-
-          <tr>
-          <td style="" align="center">Container</td>
-          <td>
-          <input type="number" name="" id="CH" autofocus placeholder="Container" value=300>
-        </td>
-        </tr>
+<!-- Fin Parametros generales de la solución -->
 
 
 
-          <!--tr>
-          <td style="" align="center">API Call</td>
-          <td>
-          <input type="number" name="" id="API" autofocus placeholder="API´s">
-        </td>
-      </tr-->
+<!-- tabla parametros del clúster -->
+
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Configuración del Clúster para el Cloud Pak</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+                      <table style="width:100%" align="left" class="footable table table-stripped toggle-arrow-tiny">
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Parámetros Clúster</th>
+                          <th bgcolor="#00008B" style="color: white;">Valor</th>
+                        </tr>
+                        <tr>
+                          <td>CPU</td>
+                          <td>
+                            <label for="cpu"><input type="number" id="cpu" name="cpu">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>RAM (GB)</td>
+                          <td>
+                            <label for="RAM (GB)"><input type="number" id="ram" name="ram">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Almacenamiento Blockstorage/Filestorage (GB)</td>
+                          <td>
+                            <label for="Almacenamiento Filestorage (GB)">
+                              <input type="number" id="storage" onkeydown="cambiostorage()" onchange="cambiostorage()" name="storage">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>IOPS Almacenamiento</td>
+                          <td>
+                            <select name="iops" id="iops">
+                              <option value=".25">.25</option>
+                              <option value="2">2</option>
+                              <option value="4" selected="selected">4</option>
+                              <option value="10">10</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td>Tipo Infraestructura</td>
+                            <td>
+                              <select name="infra_type" id="infra_type">
+                                <option value="shared" selected>Compartida</option>
+                                <option value="dedicated">Dedicada</option>
+                                <option value="bm">Bare Metal</option>
+                              </select>
+                            </td>
+                        </tr>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-          <tr>
-          <td style="" align="center">Time series hour</td>
-          <td>
-          <input type="number" name="" id="ST" autofocus placeholder="Time series" value=10>
-        </td>
-        </tr>
+<!-- Parámetros para los respaldos -->
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Configuración de Respaldos</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+                        <table style="width:100%" align="left"  class="table table-striped table-bordered table-hover dataTables-example">
+                            <tr>
+                              <th bgcolor="#00008B" style="color: white;">Parámetro de respaldos</th>
+                              <th bgcolor="#00008B" style="color: white;">Valor</th>
+                            </tr>
+                            <tr>
+                              <td>Volumen a respaldar entre Persistent Volumes y archivos YAML(GB): </td>
+                              <td><input type="number" id="almacenamientogb" name="almacenamientogb"></td>
+                            </tr>
+                            <tr>
+                              <td>Región Almacenamiento de Respaldos: </td>
+                              <td><select name="countryrespaldo" id="countryrespaldo">
+                                <option value="mexico">México</option>
+                              </select></td>
+                            </tr>
+                            <tr>
+                              <td>Resiliencia del respaldo: </td>
+                              <td><select name="resiliencybackup" id="resiliencybackup">
+                                <option value="single">Single Region</option>
+                              </select></td>
+                            </tr>
+                          </table>
 
 
-        <tr>
-          <td style="" align="center">Región</td>
-          <td>
-            <select name="region" id="region">
-             <option value="mexico" selected>US-South</option>
-              <option value="mexico">Us-East</option>
+                        <table style="width:100%" align="left" class="table table-stripped">
+                          <tr>
+                            <th bgcolor="#00008B" style="color: white;">Políticas de Respaldo</th>
+                            <th bgcolor="#00008B" style="color: white;">Incluir</th>
+                            <th bgcolor="#00008B" style="color: white;">Máximo de respaldos dentro de un mes</th>
+                          </tr>
+                          <tr>
+                            <td>Semanal</td>
+                              <td>
+                                <input type="checkbox" name="rsemanal" id="rsemanal" value=true checked>Si<br>
+                              </td>
+                            <td>
+                              <input type="number" id="rsemanalretencion" name="rsemanalretencion" value=2>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Diarios</td>
+                            <td>
+                              <input type="checkbox" name="rdiario" id="rdiario" value=true>Si<br>
+                              </td>
+                            <td>
+                              <input type="number" id="rdiarioretencion" name="rdiarioretencion">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Mensuales</td>
+                            <td>
+                              <input type="checkbox" name="rmensual" id="rmensual" value=true>Si<br>
+                              </td>
+                            <td>
+                              <input type="number" id="rmensualretencion" name="rmensualretencion">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Anuales</td>
+                            <td>
+                              <input type="checkbox" name="ranual" id="ranual" value=true>Si<br>
+                              </td>
+                            <td>
+                              <input type="number" id="ranualretencion" name="ranualretencion">
+                            </td>
+                          </tr>
+                        </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            </select>
-          </td>
-        </tr>
-        </table>
-
-    </td>
-  </tr>
 
 
-</table>
+  <!-- Parámetros para comunicaciones -->
+  <div class="wrapper wrapper-content animated fadeInRight">
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                        <h5>Parámetros de Comunicaciones</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                          <table style="width:100%" align="left" id="tcomms" name="tcomms" class="table table-stripped">
+                            <tr>
+                              <th bgcolor="#00008B" style="color: white;">Configuración de Gateway</th>
+                              <th bgcolor="#00008B" style="color: white;">Valor</th>
+                            </tr>
+                            <tr>
+                              <td>Tipo de Gateway</td>
+                              <td>
+                                <select name="typega" id="typega">
+                                  <option value="strongswan">Strong Swan</option>
+                                  <option value="vyatta">Vyatta</option>
+                                  <option value="juniper">Juniper</option>
+                                </select>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Interfase de Red</td>
+                              <td>
+                                <select name="interfase" id="interfase">
+                                  <option value="1">1 Gbps</option>
+                                  <option value="10">10 Gbps</option>
+                                </select>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Manejo de información sensible<br>
+                              <i><small>Vyatta no dispone de módulo IPS</small></i></td>
+                              <td>
+                                <input type="hidden" name="pii" value=false />
+                                <input type="checkbox" name="pii" id="pii" value=true>Si<br>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td>Requiere Alta Disponibilidad</td>
+                              <td>
+                                <input type="hidden" name="ha" value=false />
+                                <input type="checkbox" name="ha" id="ha" value=true>Si<br>
+                                </td>
+                            </tr>
+                          </table>
+
+                          <table  style="width:100%" bgcolor="#00008B" id="tsalud" name="tsalud" align="center" class="table table-stripped">
+                            <tr>
+                              <th bgcolor="#00008B" style="color: white; width:50%" >Configuración de Direct Link</th>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                NOTAS en el llenado de parámetros:<br>
+                                1. Direct Link Dedicated es soportado con puertos 1,2,5y10Gbps en México y Dallas MZR<br>
+                                2. Direct link v2.0 es soportado con puertos desde 50Mbps hasta 5Gbps en Dallas MZR<br>
+                                2. Direct link Connect on Classic es soportado con puertos desde 50Mbps hasta 5Gbps en México y Dallas 3 y 4<br>
+                                2. Direct link Exchange es soportado con puertos desde 50Mbps hasta 5Gbps en Dallas 3 y 13<br>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                  <!-- tabla parametros del gateway -->
+                                  <table style="width:100%" align="left">
+                                    <tr>
+                                      <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+                                      <th bgcolor="#00008B" style="color: white;">Valor</th>
+                                    </tr>
+                                    <tr>
+                                      <td>Región</td>
+                                      <td>
+                                          <select name="region" id="region">
+                                            <option value="mexico" selected="selected">México</option>
+                                            <option value="dallas">Dallas MZR</option>
+                                            <option value="dal3y4">Dallas 3 y 4</option>
+                                            <option value="dal3y13">Dallas 3 y 13</option>
+                                          </select>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Tipo</td>
+                                      <td>
+                                        <select name="typedl" id="typedl">
+                                          <option value="eclassic">Exchange on Classic</option>
+                                          <option value="cclassic">Connect on classic</option>
+                                          <option value="dclassic">Dedicated on classic</option>
+                                          <option value="dv2unmet">Dedicated v2.0 unmetered</option>
+                                          <option value="dv2met">Dedicated v2.0 metered</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Puerto</td>
+                                      <td>
+                                        <select name="puerto" id="puerto">
+                                          <option value="50mbps">50 Mbps</option>
+                                          <option value="100mbps">100 Mbps</option>
+                                          <option value="200mbps">200 Mbps</option>
+                                          <option value="500mbps">500 Mbps</option>
+                                          <option value="1gbps">1 Gbps</option>
+                                          <option value="2gbps">2 Gbps</option>
+                                          <option value="5gbps">5 Gbps</option>
+                                          <option value="10gbps">10 Gbps</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Routing</td>
+                                      <td>
+                                        <select name="routing" id="routing">
+                                          <option value="local">Local</option>
+                                          <option value="global">Global</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Requiere Alta Disponibilidad</td>
+                                      <td>
+                                        <input type="hidden" name="ha" value=false />
+                                        <input type="checkbox" name="ha" id="ha" value=true>Si<br>
+                                        </td>
+                                    </tr>
+                                  </table>
+                              </td>
+                            </tr>
+                          </table>
+
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Parámetros para Monitoreo -->
+  <div class="wrapper wrapper-content animated fadeInRight">
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                        <h5>Parámetros de Monitoreo</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                      <table style="width:100%" bgcolor="#00008B" id="tauditoria" name="tauditoria" align="left" class="table table-stripped">
+                        <tr>
+                          <th colspan=2 bgcolor="#00008B" style="color: white;">Configuración Trazas de Auditoria (Activity Tracker)</th>
+                        </tr>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+                          <th bgcolor="#00008B" style="color: white;">Valor</th>
+                        </tr>
+                         <tr>
+                          <td >Almacenamiento (GB)</td>
+                          <td>
+                          <input type="number" name="atracker" id="atracker" autofocus placeholder="GB">
+                          </td>
+                        </tr>
+                        <tr>
+                         <td >Tiempo de retención</td>
+                         <td>
+                           <select name="atracker_retencion" id="atracker_retencion">
+                             <option value="7">7 días</option>
+                             <option value="14">14 días</option>
+                             <option value="30">30 días</option>
+                             <option value="30hipaa">30 días HIPAA</option>
+                           </select>
+                         </td>
+                       </tr>
+                      </table>
+
+
+
+                      <table style="width:100%" bgcolor="#00008B" id="tlogs" name="tlogs" align="left" class="table table-stripped">
+                        <tr>
+                          <th colspan=2 bgcolor="#00008B" style="color: white;">Parámetros de Log Analysis</th>
+                        </tr>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+                          <th bgcolor="#00008B" style="color: white;">Valor</th>
+                        </tr>
+                         <tr>
+                          <td >Almacenamiento (GB)</td>
+                          <td>
+                          <input type="number" name="aloganalysis" id="aloganalysis" autofocus placeholder="GB">
+                          </td>
+                        </tr>
+                        <tr>
+                         <td >Tiempo de retención</td>
+                         <td>
+                           <select name="aloganalysis_retencion" id="aloganalysis_retencion">
+                             <option value="7">7 días</option>
+                             <option value="14">14 días</option>
+                             <option value="30">30 días</option>
+                             <option value="30hipaa">30 días HIPAA</option>
+                           </select>
+                         </td>
+                       </tr>
+                      </table>
+
+                      <table style="width:100%" bgcolor="#00008B" id="tsalud" name="tsalud" align="left" class="table table-stripped">
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;" >Configuración de Monitoreo de Salud (Cloud Monitoring)</th>
+                          <th bgcolor="#00008B" style="color: white;">Valor</th>
+                        </tr>
+                         <!--tr>
+                          <td style="" align="center">Node</td>
+                          <td>
+                          <input type="number" name="" id="N" autofocus placeholder="Node"> </td>
+                        </tr>
+
+                        <tr>
+                          <td style="" align="center">Lite node</td>
+                          <td>
+                          <input type="number" name="" id="NL" autofocus placeholder="Lite node">
+                        </td>
+                      </tr-->
+                          <tr>
+                          <td style="">Container</td>
+                          <td>
+                          <input type="number" name="" id="CH" autofocus placeholder="Container" value=300>
+                        </td>
+                        </tr>
+
+
+
+                          <!--tr>
+                          <td style="" align="center">API Call</td>
+                          <td>
+                          <input type="number" name="" id="API" autofocus placeholder="API´s">
+                        </td>
+                      </tr-->
+
+
+                          <tr>
+                          <td style="" >Time series hour</td>
+                          <td>
+                          <input type="number" name="" id="ST" autofocus placeholder="Time series" value=10>
+                        </td>
+                        </tr>
+
+
+                        <tr>
+                          <td style="" >Región</td>
+                          <td>
+                            <select name="region" id="region">
+                             <option value="mexico" selected>US-South</option>
+                              <option value="mexico">Us-East</option>
+                            </select>
+                          </td>
+                        </tr>
+                        </table>
+
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
 <p>
 <button type="submit">Quiero mi dimensionamiento</button>
 </p>
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!--%=respuestastorage%-->
-<% if (respuestastorage != nil and respuestastorage.size>0) then%>
-<h3>Dimensionamiento Almacenamiento</h3>
-  <table  style="width:100%" align="left">
-    <thead>
-      <tr>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidad Restante</th>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidades</th>
-        <th bgcolor="#00008B" style="color: white;">IOPS/GB</th>
-        <th bgcolor="#00008B" style="color: white;">Tamaño máximo</th>
-        <th bgcolor="#00008B" style="color: white;">Unidades de Tamaño Máximo</th>
-        <th bgcolor="#00008B" style="color: white;">Unidad Restante</th>
 
-      </tr>
-    </thead>
-    <tbody>
-      <% respuestastorage.each do |json| %>
-        <tr>
-          <td>$<%= json["preciounidadrestante"].to_s %> USD</td>
-          <td><%= json["unidades"].to_s %></td>
-          <td><%= json["iops"].to_s %></td>
-          <td><%= json["maxunit"].to_s %></td>
-          <td>$<%= json["precio"].to_s %> USD</td>
-          <td><%= json["unidadrestante"].to_s %></td>
 
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+
+<% if (respuestasol != nil and respuestasol.size>0) then %>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Precio Total de la Solución</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+                  <table  style="width:100%" align="left"  class="table table-stripped">
+                      <tr>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual Total de la Solución (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">=</th>
+                        <th bgcolor="#00008B" style="color: white;">Precio Soporte Mensual (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">+</th>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual de Servicios(USD)</th>
+                      </tr>
+
+                      <% respuestasol.each do |json| %>
+                      <tr>
+                        <td><b>$<%=json[:"total"] %> USD</b></td>
+                        <td><b> </b></td>
+                        <td><b>$<%=json[:"soporte"] %> USD</b></td>
+                        <td><b> </b></td>
+                        <td ><b>$<%=json[:"servicios"] %> USD</b></td>
+                      </tr>
+                      <% end %>
+                  </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <% end %>
-
-
 
 <!--%=respuestastorage%-->
 <% if (respuestasizing != nil and respuestasizing.size>0) then%>
-<h3>Dimensionamiento Clúster más económico</h3>
-  <table  style="width:100%" align="left">
-    <thead>
-      <tr>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
-        <th bgcolor="#00008B" style="color: white;">Flavor</th>
-        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
-        <th bgcolor="#00008B" style="color: white;">Workers</th>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Dimensionamiento Clúster Óptimo</h5>
 
-        <!--th bgcolor="#00008B" style="color: white;">Precio  Mensual (USD) con Subscripción OCP</th-->
-      </tr>
-    </thead>
-    <tbody>
-      <% respuestasizing.each do |json| %>
-        <tr>
-          <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
-          <td><%= json["flavor"].to_s %></td>
-          <td><%= json["infra_type"].to_s %></td>
-          <td><%= json["workers"].to_s %></td>
-          <!--td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td-->
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+                    <table  style="width:100%" align="left"  class="table table-stripped">
+                      <thead>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
+                          <th bgcolor="#00008B" style="color: white;">Flavor</th>
+                          <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+                          <th bgcolor="#00008B" style="color: white;">Workers</th>
+
+                          <!--th bgcolor="#00008B" style="color: white;">Precio  Mensual (USD) con Subscripción OCP</th-->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% respuestasizing.each do |json| %>
+                          <tr>
+                            <td><div class="myDIV">$<%= json["precio"].to_s %> USD</div></td>
+                            <td><%= json["flavor"].to_s %></td>
+                            <td><%= json["infra_type"].to_s %></td>
+                            <td><%= json["workers"].to_s %></td>
+                            <!--td><div class="myDIV">$<%= json["precio_subs"].to_s %> USD</div></td-->
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <% end %>
 
-<% if (respuestasizingalt != nil and respuestasizingalt.size>0) then%>
-<h3>Alternativas del Dimensionamiento Clúster</h3>
-  <table  style="width:100%" align="left">
-    <thead>
-      <tr>
-        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
-        <th bgcolor="#00008B" style="color: white;">Flavor</th>
-        <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
-        <th bgcolor="#00008B" style="color: white;">Workers</th>
-        <!--th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) con Subscripción OCP</th-->
-      </tr>
-    </thead>
-    <tbody>
-      <% respuestasizingalt.each do |json| %>
-        <tr>
-          <td>$<%= json["precio"].to_s %> USD</td>
-          <td><%= json["flavor"].to_s %></td>
-          <td><%= json["infra_type"].to_s %></td>
-          <td><%= json["workers"].to_s %></td>
-          <!--td>$<%= json["precio_subs"].to_s %> USD</td-->
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<!--%=respuestastorage%-->
+<% if (respuestastorage != nil and respuestastorage.size>0) then%>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Dimensionamiento Almacenamiento</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+
+                    <table  style="width:100%" align="left"  class="table table-stripped">
+                      <thead>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidad Restante</th>
+                          <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidades</th>
+                          <th bgcolor="#00008B" style="color: white;">IOPS/GB</th>
+                          <th bgcolor="#00008B" style="color: white;">Tamaño máximo</th>
+                          <th bgcolor="#00008B" style="color: white;">Unidades de Tamaño Máximo</th>
+                          <th bgcolor="#00008B" style="color: white;">Unidad Restante</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% respuestastorage.each do |json| %>
+                          <tr>
+                            <td>$<%= json["preciounidadrestante"].to_s %> USD</td>
+                            <td><%= json["unidades"].to_s %></td>
+                            <td><%= json["iops"].to_s %></td>
+                            <td><%= json["maxunit"].to_s %></td>
+                            <td>$<%= json["precio"].to_s %> USD</td>
+                            <td><%= json["unidadrestante"].to_s %></td>
+
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
 <% end %>
+
+<% if (respuestasizingpx != nil and respuestasizingpx.size>0) then %>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Sizing de la solución de respaldos</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+                  <h3>Sizing IKS para respaldos</h3>
+                  <table  style="width:100%" align="left"  class="table table-stripped">
+                    <thead>
+                      <tr>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">Tipo Worker Node</th>
+                        <th bgcolor="#00008B" style="color: white;">Tipo Infraestructura</th>
+                        <th bgcolor="#00008B" style="color: white;">Workers</th>
+                        <th bgcolor="#00008B" style="color: white;">Región</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td>$<%= respuestasizingpx[1]["precio"].to_s %> USD</td>
+                          <td><%= respuestasizingpx[1]["flavor"].to_s %></td>
+                          <td><%= respuestasizingpx[1]["infra_type"].to_s %></td>
+                          <td><%= respuestasizingpx[1]["workers"].to_s %></td>
+                          <td><%= respuestasizingpx[1]["region"].to_s %></td>
+
+                        </tr>
+                    </tbody>
+                  </table>
+
+                  <h3>Sizing Almacenamiento de Objetos para respaldos</h3>
+                  <table  style="width:100%" align="left"  class="table table-stripped">
+                    <thead>
+                      <tr>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">Nota</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td width=20%>$<%= respuestasizingpx[3]["precio"].to_s %> USD</td>
+                          <td><%= respuestasizingpx[3]["nota"].to_s %></td>
+                        </tr>
+                    </tbody>
+                  </table>
+
+                  <h3>Sizing PX-Backup</h3>
+                  <table  style="width:100%" align="left"  class="table table-stripped">
+                    <thead>
+                      <tr>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">Workers Node</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td>$<%= respuestasizingpx[2]["precio"].to_s %> USD</td>
+                          <td><%= respuestasizingpx[2]["workers"].to_s %></td>
+                        </tr>
+                    </tbody>
+                  </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<% end %>
+
+<!--%=respuestasizingga%-->
+<% if (respuestasizingga != nil and respuestasizingga.size>0) then%>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Sizing de Gateway Appliance</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+                    <table  style="width:100%" align="left"  class="table table-stripped">
+                      <thead>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                          <th bgcolor="#00008B" style="color: white;">Región</th>
+                          <th bgcolor="#00008B" style="color: white;">Tipo de Gateway</th>
+                          <th bgcolor="#00008B" style="color: white;">Manejo información sensible</th>
+                          <th bgcolor="#00008B" style="color: white;">Nodos </th>
+                          <th bgcolor="#00008B" style="color: white;">Descripción </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% respuestasizingga.each do |json| %>
+                          <tr>
+                            <td>$<%= json["precio"].to_s %> USD</td>
+                            <td><%= json["region"].to_s %></td>
+                            <td><%= json["type"].to_s %></td>
+                            <td><%= json["pii"].to_s %></td>
+                            <td><%= json["nodos"].to_i %></td>
+                            <td><%= json["description"].to_s %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+
+                  </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<% end %>
+
+<!--%=respuestasizingdl%-->
+<% if (respuestasizingdl != nil ) then%>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Sizing de Direct Link</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+                        <table  style="width:100%" align="left"  class="table table-stripped">
+                          <thead>
+                            <tr>
+                              <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                              <th bgcolor="#00008B" style="color: white;">Región</th>
+                              <th bgcolor="#00008B" style="color: white;">Tipo</th>
+                              <th bgcolor="#00008B" style="color: white;">Puerto</th>
+                              <th bgcolor="#00008B" style="color: white;">Nodos </th>
+                              <th bgcolor="#00008B" style="color: white;">Routing </th>
+                              <th bgcolor="#00008B" style="color: white;">País Offerta </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% respuestasizingdl.each do |json| %>
+                              <tr>
+                                <td>$<%= json["precio"].to_s %> USD</td>
+                                <td><%= json["region"].to_s %></td>
+                                <td><%= json["type"].to_s %></td>
+                                <td><%= json["puerto"].to_s %></td>
+                                <td><%= json["nodos"].to_i %></td>
+                                <td><%= json["routing"].to_s %></td>
+                                <td><%= json["country_offer"].to_s %></td>
+                              </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+
+                  </div>
+          </div>
+      </div>
+    </div>
+</div>
+<% end %>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Datos adicionales del dimensionamiento</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+
+
+
+                  <% if (respuestasizingpx != nil and respuestasizingpx.size>0) then %>
+                    <h3>Cálculo de Almacenamiento para Respaldos</h3>
+
+                    <table  style="width:100%" align="left"  class="table table-stripped">
+                      <thead>
+                        <tr>
+                          <th bgcolor="#00008B" style="color: white;">Almacenamiento Requerido (GB)</th>
+                          <th bgcolor="#00008B" style="color: white;">Almacenamiento Requerido Comprimido (GB) Ratio 2.5:1</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                            <td><%= respuestasizingpx[0]["volumentotalgb"].to_s %></td>
+                            <td><%= respuestasizingpx[0]["volumentotalcomprimidogb"].to_s %></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  <% end %>
+
+                    <% if (respuestasizingalt != nil and respuestasizingalt.size>0) then%>
+                    <h3>Alternativas del Dimensionamiento Clúster</h3>
+                      <table  style="width:100%" align="left"  class="table table-stripped">
+                        <thead>
+                          <tr>
+                            <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
+                            <th bgcolor="#00008B" style="color: white;">Flavor</th>
+                            <th bgcolor="#00008B" style="color: white;">Tipo de Infraestructura</th>
+                            <th bgcolor="#00008B" style="color: white;">Workers</th>
+                            <!--th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) con Subscripción OCP</th-->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% respuestasizingalt.each do |json| %>
+                            <tr>
+                              <td>$<%= json["precio"].to_s %> USD</td>
+                              <td><%= json["flavor"].to_s %></td>
+                              <td><%= json["infra_type"].to_s %></td>
+                              <td><%= json["workers"].to_s %></td>
+                              <!--td>$<%= json["precio_subs"].to_s %> USD</td-->
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    <% end %>
+
+                  </div>
+          </div>
+      </div>
+    </div>
+</div>
 
 <script>
-  function habRespaldos()
-  {
-    if (this.checked)
-    {
-      document.getElementById("trespaldos").style.visibility = "visible";;
-      document.getElementById("tpoliticas").style.visibility = "visible";;
-    }
-    else
-    {
-        document.getElementById("trespaldos").style.visibility = "hidden";
-        document.getElementById("tpoliticas").style.visibility = "hidden";
-    }
-  }
-  function habLogs()
-  {
-    if (this.checked)
-    {
-      document.getElementById("trespaldos").show();
-      document.getElementById("tpoliticas").show();
-    }
-    else
-    {
-        document.getElementById("trespaldos").hide();
-        document.getElementById("tpoliticas").hide();
-    }
-  }
-  function habSalud()
-  {
-
-  }
-  function habAuditoria()
-  {
-
-  }
-  function habGateways()
-  {
-    if (this.checked==true)
-    {
-      document.getElementById("tcomms").style.visibility = "visible";
-
-    }
-    else
-    {
-        document.getElementById("tcomms").style.visibility = "hidden";
-
-    }
-
-  }
 
   function cambiostorage()
   {
     document.getElementById("almacenamientogb").value=document.getElementById("storage").value;
-  };
-  function nonprod()
-  {
-    document.getElementById("tiposoporte").value="advanced";
-    document.getElementById("iops").value=4;
-    document.getElementById("infra_type").value="shared";
-    document.getElementById("rsemanal").checked=true;
-    document.getElementById("rsemanalretencion").value=2;
   };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
