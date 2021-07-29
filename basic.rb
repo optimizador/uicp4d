@@ -113,11 +113,12 @@ end
   get '/cp4dtemplaterespuesta' do
     urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
     #urlapi="http://localhost:8080"
+    urlapiga="https://apis-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
+    #urlapiga="http://localhost:8080"
 
     logger = Logger.new(STDOUT)
     logger.info("Selecciono dimensionamiento para template de CP4D")
     @name = "CP4D"
-
     ####################################
     # Parametros Generales
     ####################################
@@ -127,10 +128,18 @@ end
 
     increspaldos="#{params['increspaldos']}"
     inclogs="#{params['inclogs']}"
-    inclogs="#{params['incsalud']}"
-    inclogs="#{params['incauditoria']}"
-    inclogs="#{params['incga']}"
-    inclogs="#{params['incdl']}"
+    inclsalud="#{params['incsalud']}"
+    inclauditoria="#{params['incauditoria']}"
+    inclga="#{params['incga']}"
+    incldl="#{params['incdl']}"
+
+    logger.info("Inclusión de servicios")
+    logger.info("increspaldos #{increspaldos}")
+    logger.info("inclogs #{inclogs}")
+    logger.info("inclsalud #{inclsalud}")
+    logger.info("inclauditoria #{inclauditoria}")
+    logger.info("inclga #{inclga}")
+    logger.info("incldl #{incldl}")
 
     ####################################
     # Parametros para Clúster
@@ -207,68 +216,137 @@ end
     respuestasol=[]
     precioservicios=0
 
-    #parametros recibidos
+
+
+    ####################################
+    # Cálculo de clúster óptimo
+    ####################################
+
     logger.info("PRIMER LLAMADO DE API #{urlapi}/api/v2/sizingclusteroptimo?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}")
     respuestasizing = RestClient.get "#{urlapi}/api/v2/sizingclusteroptimo?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}", {:params => {}}
     respuestasizing=JSON.parse(respuestasizing.to_s)
-    preciocluster=precioservicios+respuestasizing[0]["precio"].to_f
-    precioservicios=precioservicios+preciocluster
-    logger.info("Precio Clúster: #{preciocluster}")
-    logger.info("Precio Servicios: #{precioservicios}")
-    logger.info(respuestasizing)
+    if (respuestasizing != nil and respuestasizing.size>0)
+      preciocluster=precioservicios+respuestasizing[0]["precio"].to_f
+      precioservicios=precioservicios+preciocluster
+      logger.info("Precio Clúster: #{preciocluster}")
+      logger.info("Precio Servicios: #{precioservicios}")
+      logger.info(respuestasizing)
+    else
+          logger.info("NO SE OBTUVO SIZING DEL CLUSTER")
+    end
+
+    ####################################
+    # Alternativas de clúster al óptimo
+    ####################################
     logger.info("SEGUNDO LLAMADO DE API #{urlapi}/api/v2/sizingcluster?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}")
     respuestasizingalt = RestClient.get "#{urlapi}/api/v2/sizingcluster?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}", {:params => {}}
     respuestasizingalt=JSON.parse(respuestasizingalt.to_s)
     logger.info(respuestasizingalt)
+
+    ####################################
+    # Cálculo de storage
+    ####################################
+
     logger.info("TERCER LLAMADO DE API #{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}")
     respuestastorage = RestClient.get "#{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}", {:params => {}}
     respuestastorage=JSON.parse(respuestastorage.to_s)
-    preciostorage=respuestastorage[0]["precio"].to_f+respuestastorage[0]["preciounidadrestante"].to_f
-    precioservicios=precioservicios+preciostorage
-    logger.info("Precio Storage: #{preciostorage}")
-    logger.info("Precio Servicios: #{precioservicios}")
-
     logger.info(respuestastorage)
-
-    #parametros recibidos
-    logger.info("llamado api PX-Backup:" )
-    logger.info("#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}")
-    respuestasizingpx = RestClient.get "#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}", {:params => {}}
-    respuestasizingpx = JSON.parse(respuestasizingpx.to_s)
-    logger.info("*************")
-    logger.info(respuestasizingpx)
-    precioiks=respuestasizingpx[1]["precio"]
-    preciocos=respuestasizingpx[3]["precio"]
-    preciopx=respuestasizingpx[2]["precio"]
-    precioservicios=precioservicios+preciopx+preciocos+precioiks
-    logger.info("Precio Sol PX: IKS #{precioiks} COS #{preciocos} PX #{preciopx}")
-    logger.info("Precio Servicios: #{precioservicios}")
-
-    urlapiga="https://apis-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
-    #urlapiga="http://localhost:8080"
-    logger.info("llamado api GA:" )
-    logger.info("#{urlapiga}/api/v1/sizingga?region=#{region}&type=#{typega}&interfase=#{interfase}&ha=#{ha}&pii=#{pii}")
-    respuestasizingga = RestClient.get "#{urlapiga}/api/v1/sizingga?region=#{region}&type=#{typega}&interfase=#{interfase}&ha=#{ha}&pii=#{pii}", {:params => {}}
-    respuestasizingga=JSON.parse(respuestasizingga.to_s)
-    logger.info("*************")
-    logger.info(respuestasizingga)
-    precioga=respuestasizingga[0]["precio"].to_f
-    precioservicios=precioservicios+precioga
-    logger.info("Precio Gateway Appliance: #{precioga}")
-    logger.info("Precio Servicios: #{precioservicios}")
+    if (respuestastorage != nil and respuestastorage.size>0)
+      preciostorage=respuestastorage[0]["precio"].to_f+respuestastorage[0]["preciounidadrestante"].to_f
+      precioservicios=precioservicios+preciostorage
+      logger.info("Precio Storage: #{preciostorage}")
+      logger.info("Precio Servicios: #{precioservicios}")
+    else
+          logger.info("NO SE OBTUVO SIZING DE STORAGE")
+    end
 
 
 
-    logger.info("llamado api DL:" )
-    respuestasizingdl = RestClient.get "#{urlapiga}/api/v1/sizingdl?region=#{region}&type=#{typedl}&country_offer=#{country_offer}&puerto=#{puerto}&routing=#{routing}&ha=#{ha}", {:params => {}}
-    respuestasizingdl=JSON.parse(respuestasizingdl.to_s)
-    logger.info("*************")
-    logger.info(respuestasizingdl)
-    preciodl=respuestasizingdl[0]["precio"].to_f
-    precioservicios=precioservicios+preciodl
-    logger.info("Precio Direct Link: #{preciodl}")
-    logger.info("Precio Servicios: #{precioservicios}")
-    logger.info("TERMINO DE LLAMAR LOS APIS")
+
+
+    ####################################
+    #Cálculo de logs
+    ####################################
+    if inclogs=="true"
+        logger.info("=====>>>  INCLUYE LOGS")
+    else
+        logger.info("=====>>> NO INCLUYE LOGS")
+    end
+
+
+    ####################################
+    #Cálculo de auditoria
+    ####################################
+    if inclauditoria=="true"
+        logger.info("=====>>>  INCLUYE AUDITORIA")
+    else
+        logger.info("=====>>> NO INCLUYE AUDITORIA")
+    end
+
+
+    ####################################
+    #Cálculo de auditoria
+    ####################################
+    if inclsalud=="true"
+        logger.info("=====>>>  INCLUYE MONITOREO SALUD")
+    else
+        logger.info("=====>>> NO INCLUYE MONITOREO SALUD")
+    end
+    ####################################
+    #Cálculo de respaldos
+    ####################################
+    if increspaldos=="true"
+        logger.info("llamado api PX-Backup:" )
+        logger.info("#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}")
+        respuestasizingpx = RestClient.get "#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}", {:params => {}}
+        respuestasizingpx = JSON.parse(respuestasizingpx.to_s)
+        logger.info("*************")
+        logger.info(respuestasizingpx)
+        precioiks=respuestasizingpx[1]["precio"]
+        preciocos=respuestasizingpx[3]["precio"]
+        preciopx=respuestasizingpx[2]["precio"]
+        precioservicios=precioservicios+preciopx+preciocos+precioiks
+        logger.info("Precio Sol PX: IKS #{precioiks} COS #{preciocos} PX #{preciopx}")
+        logger.info("Precio Servicios: #{precioservicios}")
+    else
+        logger.info("=====>>> NO INCLUYE RESPALDOS")
+    end
+
+
+    ####################################
+    #Cálculo de gateway appliance
+    ####################################
+    if inclga=="true"
+        logger.info("llamado api GA:" )
+        logger.info("#{urlapiga}/api/v1/sizingga?region=#{region}&type=#{typega}&interfase=#{interfase}&ha=#{ha}&pii=#{pii}")
+        respuestasizingga = RestClient.get "#{urlapiga}/api/v1/sizingga?region=#{region}&type=#{typega}&interfase=#{interfase}&ha=#{ha}&pii=#{pii}", {:params => {}}
+        respuestasizingga=JSON.parse(respuestasizingga.to_s)
+        logger.info("*************")
+        logger.info(respuestasizingga)
+        precioga=respuestasizingga[0]["precio"].to_f
+        precioservicios=precioservicios+precioga
+        logger.info("Precio Gateway Appliance: #{precioga}")
+        logger.info("Precio Servicios: #{precioservicios}")
+    else
+        logger.info("=====>>> NO INCLUYE GATEWAY APPLIANCE")
+    end
+
+    ####################################
+    #Cálculo de Direct Link
+    ####################################
+    if incldl=="true"
+        logger.info("llamado api DL:" )
+        respuestasizingdl = RestClient.get "#{urlapiga}/api/v1/sizingdl?region=#{region}&type=#{typedl}&country_offer=#{country_offer}&puerto=#{puerto}&routing=#{routing}&ha=#{ha}", {:params => {}}
+        respuestasizingdl=JSON.parse(respuestasizingdl.to_s)
+        logger.info("*************")
+        logger.info(respuestasizingdl)
+        preciodl=respuestasizingdl[0]["precio"].to_f
+        precioservicios=precioservicios+preciodl
+        logger.info("Precio Direct Link: #{preciodl}")
+        logger.info("Precio Servicios: #{precioservicios}")
+    else
+          logger.info("=====>>> NO INCLUYE DIRECT LINK")
+    end
 
     respuestasoporte=[]
     llamadoapisoporte="#{urlapi}/api/v1/sizingsupport?type=#{tiposoporte}&precioservicios=#{precioservicios}"
