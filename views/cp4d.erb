@@ -2,14 +2,6 @@
   "$#{num.gsub(/\d(?=(...)+$)/, '\0,')}"
 end
 %>
-<p>Vamos a dimensionar el clúster de OCP para tú Cloud Pak for Data, llena los parámetros de configuración</p>
-
-<p style="font-style: italic;">
-NOTAS:<br>
-*Los precios lista que se presentarán son calculados y pueden variar respecto a los presentados en IBM Cloud en +-1%<br>
-**Para procesos de special bid es requerido obtener los precios lista desde cloud.ibm.com<br>
-</p>
-
 <form action="/cp4drespuesta" method="get">
 
   <div class="wrapper wrapper-content animated fadeInRight">
@@ -28,7 +20,7 @@ NOTAS:<br>
 
                     <div class="ibox-content">
 
-                          <table style="width:100%" align="left">
+                          <table style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
                             <tr>
                               <td>
                                   <!-- tabla parametros del clúster -->
@@ -129,7 +121,7 @@ NOTAS:<br>
 
                   <div class="ibox-content">
 
-                        <table  style="width:100%" align="left">
+                        <table  style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
                           <thead>
                             <tr>
                               <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) Unidades</th>
@@ -180,7 +172,7 @@ NOTAS:<br>
                   </div>
 
                   <div class="ibox-content">
-                      <table  style="width:100%" align="left">
+                      <table  style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
                         <thead>
                           <tr>
                             <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD) sin SubsOCP </th>
@@ -226,7 +218,7 @@ NOTAS:<br>
 
                   <div class="ibox-content">
 
-                        <table  style="width:100%" align="left">
+                        <table  style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
                           <thead>
                             <tr>
                               <th bgcolor="#00008B" style="color: white;">Flavor</th>
