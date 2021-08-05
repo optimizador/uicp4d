@@ -108,7 +108,21 @@ end
     respuestasizingga=[]
     respuestasizingdl=[]
     respuestasol=[]
-    erb :cp4dtemplate , :locals => {:respuestasol => respuestasol,:respuestasizingdl => respuestasizingdl,:respuestasizingga => respuestasizingga, :respuestasizingpx => respuestasizingpx,:respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
+
+    respuestamonitoring=[]
+    respuestatracker=[]
+    respuestaloganalysis=[]
+    erb :cp4dtemplate , :locals => {:respuestamonitoring => respuestamonitoring,
+                                    :respuestatracker => respuestatracker,
+                                    :respuestaloganalysis => respuestaloganalysis,
+                                    :respuestasol => respuestasol,
+                                    :respuestasizingdl => respuestasizingdl,
+                                    :respuestasizingga => respuestasizingga,
+                                    :respuestasizingpx => respuestasizingpx,
+                                    :respuestasizing => respuestasizing,
+                                    :respuestasizingalt => respuestasizingalt,
+                                    :respuestastorage => respuestastorage}
+
   end
   get '/cp4dtemplaterespuesta' do
     urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
