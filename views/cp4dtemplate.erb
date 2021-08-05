@@ -31,6 +31,7 @@
                       <td>
                         <select name="region" id="region">
                           <option value="mexico">México</option>
+                          <option value="dallas">Dallas</option>
                         </select>
                       </td>
                     </tr>
@@ -318,7 +319,7 @@
                                     <tr>
                                       <td>Región</td>
                                       <td>
-                                          <select name="region" id="region">
+                                          <select name="regiondl" id="regiondl">
                                             <option value="mexico" selected="selected">México</option>
                                             <option value="dallas">Dallas MZR</option>
                                             <option value="dal3y4">Dallas 3 y 4</option>
@@ -407,17 +408,17 @@
                          <tr>
                           <td >Almacenamiento (GB)</td>
                           <td>
-                          <input type="number" name="atracker" id="atracker" autofocus placeholder="GB">
+                          <input type="number" name="storagetracker" id="storagetracker" autofocus placeholder="GB">
                           </td>
                         </tr>
                         <tr>
                          <td >Tiempo de retención</td>
                          <td>
-                           <select name="atracker_retencion" id="atracker_retencion">
-                             <option value="7">7 días</option>
-                             <option value="14">14 días</option>
-                             <option value="30">30 días</option>
-                             <option value="30hipaa">30 días HIPAA</option>
+                           <select name="tracker_retencion" id="tracker_retencion">
+                             <option value="7dias">7 días</option>
+                             <option value="14dias">14 días</option>
+                             <option value="30dias">30 días</option>
+                             <option value="30diash">30 días HIPAA</option>
                            </select>
                          </td>
                        </tr>
@@ -436,17 +437,17 @@
                          <tr>
                           <td >Almacenamiento (GB)</td>
                           <td>
-                          <input type="number" name="aloganalysis" id="aloganalysis" autofocus placeholder="GB">
+                          <input type="number" name="storagelogs" id="storagelogs" autofocus placeholder="GB">
                           </td>
                         </tr>
                         <tr>
                          <td >Tiempo de retención</td>
                          <td>
-                           <select name="aloganalysis_retencion" id="aloganalysis_retencion">
-                             <option value="7">7 días</option>
-                             <option value="14">14 días</option>
-                             <option value="30">30 días</option>
-                             <option value="30hipaa">30 días HIPAA</option>
+                           <select name="loganalysis_retencion" id="loganalysis_retencion">
+                             <option value="7dias">7 días</option>
+                             <option value="14dias">14 días</option>
+                             <option value="30dias">30 días</option>
+                             <option value="30diash">30 días HIPAA</option>
                            </select>
                          </td>
                        </tr>
@@ -472,7 +473,7 @@
                           <tr>
                           <td style="">Container</td>
                           <td>
-                          <input type="number" name="" id="CH" autofocus placeholder="Container" value=300>
+                          <input type="number" name="contenedores" id="contenedores" autofocus placeholder="Container" value=300>
                         </td>
                         </tr>
 
@@ -489,20 +490,22 @@
                           <tr>
                           <td style="" >Time series hour</td>
                           <td>
-                          <input type="number" name="" id="ST" autofocus placeholder="Time series" value=10>
+                          <input type="number" name="seriestiempo" id="seriestiempo" autofocus placeholder="Time series" value=20>
                         </td>
                         </tr>
 
 
+                        <!--
                         <tr>
                           <td style="" >Región</td>
                           <td>
-                            <select name="region" id="region">
+                            <select name="regionmon" id="regionmon">
                              <option value="mexico" selected>US-South</option>
                               <option value="mexico">Us-East</option>
                             </select>
                           </td>
                         </tr>
+                        -->
                         </table>
 
                     </div>
@@ -660,6 +663,73 @@
     </div>
   </div>
 </div>
+<% end %>
+<!--
+<%=respuestamonitoring%><br>
+<%=respuestatracker%><br>
+<%=respuestaloganalysis%><br>
+-->
+<% if (respuestamonitoring != nil and respuestamonitoring.size>0) or
+      (respuestatracker != nil and respuestatracker.size>0) or
+      (respuestaloganalysis != nil and respuestaloganalysis.size>0)
+%>
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Sizing Monitoreo</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                </div>
+
+                <div class="ibox-content">
+                  <table  style="width:100%" align="left"  class="table table-stripped">
+                    <thead>
+                      <tr>
+                        <th bgcolor="#00008B" style="color: white;">Precio Mensual (USD)</th>
+                        <th bgcolor="#00008B" style="color: white;">Servicio</th>
+                        <th bgcolor="#00008B" style="color: white;">configuración</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if (respuestamonitoring != nil and respuestamonitoring.size>0)
+                      %>
+                        <tr>
+                          <td>$<%= respuestamonitoring["total"].to_s %> USD</td>
+                          <td>IBM Cloud Monitoring</td>
+                          <td> Nodos <%= respuestamonitoring["node"].to_s %>, Nodos Lite <%=respuestamonitoring["litenode"].to_s %>, Series de Tiempo <%= respuestamonitoring["timeserieshour"].to_s %>, Contenedores <%= respuestamonitoring["Container"].to_s %>, Región <%= respuestamonitoring["region"].to_s %>, Precios para <%= respuestamonitoring["pais"].to_s %></td>
+                        </tr>
+                      <% end %>
+                      <% if (respuestatracker != nil and respuestatracker.size>0)
+                      %>
+                        <tr>
+                          <td>$<%= respuestatracker["total"].to_s %> USD</td>
+                          <td>IBM Cloud Activity Tracker</td>
+                          <td> Almacenamiento <%= respuestatracker["GB"].to_s %> GB, Dias de Retención <%=respuestatracker["dias"].to_s %>, Región <%= respuestatracker["region"].to_s %>, Precios para <%= respuestatracker["pais"].to_s %></td>
+                        </tr>
+                      <% end %>
+                      <% if (respuestaloganalysis != nil and respuestaloganalysis.size>0)
+                      %>
+                        <tr>
+                          <td>$<%= respuestaloganalysis["total"].to_s %> USD</td>
+                          <td>IBM Cloud Log Analysis</td>
+                          <td> Almacenamiento <%= respuestaloganalysis["GB"].to_s %> GB, Dias de Retención <%=respuestaloganalysis["dias"].to_s %>, Región <%= respuestaloganalysis["region"].to_s %>, Precios para <%= respuestaloganalysis["pais"].to_s %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
 <% end %>
 
 <% if (respuestasizingpx != nil and respuestasizingpx.size>0) then %>

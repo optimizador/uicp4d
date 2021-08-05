@@ -115,7 +115,8 @@ end
     #urlapi="http://localhost:8080"
     urlapiga="https://apis-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
     #urlapiga="http://localhost:8080"
-
+    urlapismonitoring="https://apimonitoring.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
+    #urlapismonitoring="http://localhost:3000"
     logger = Logger.new(STDOUT)
     logger.info("Selecciono dimensionamiento para template de CP4D")
     @name = "CP4D"
@@ -132,6 +133,10 @@ end
     inclauditoria="#{params['incauditoria']}"
     inclga="#{params['incga']}"
     incldl="#{params['incdl']}"
+    logger.info("Parametros generales")
+    logger.info("region #{region}")
+    logger.info("country_offer #{country_offer}")
+    logger.info("tiposoporte #{tiposoporte}")
 
     logger.info("Inclusión de servicios")
     logger.info("increspaldos #{increspaldos}")
@@ -202,11 +207,14 @@ end
     # Parametros para DirectLink
     ####################################
     typedl="#{params['typedl']}"
+    regiondl="#{params['regiondl']}"
 
     puerto="#{params['puerto']}"
     routing="#{params['routing']}"
     ha="#{params['ha']}"
 
+    nodos=0
+    nodoslite=0
     respuestasizingpx=[]
     respuestasizing=[]
     respuestasizingalt=[]
@@ -226,6 +234,18 @@ end
     respuestasizing = RestClient.get "#{urlapi}/api/v2/sizingclusteroptimo?cpu=#{cpu}&ram=#{ram}&infra_type=#{infra_type}&region=#{region}", {:params => {}}
     respuestasizing=JSON.parse(respuestasizing.to_s)
     if (respuestasizing != nil and respuestasizing.size>0)
+
+
+      ########################
+      # Información de Cloud Monitoring
+      ########################
+      if infra_type=="bm"
+        nodos=respuestasizing[0]["workers"].to_i
+      else
+        nodoslite=respuestasizing[0]["workers"].to_i
+      end
+
+
       preciocluster=precioservicios+respuestasizing[0]["precio"].to_f
       precioservicios=precioservicios+preciocluster
       logger.info("Precio Clúster: #{preciocluster}")
@@ -247,7 +267,7 @@ end
     # Cálculo de storage
     ####################################
 
-    logger.info("TERCER LLAMADO DE API #{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}")
+    logger.info("API Storage #{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}")
     respuestastorage = RestClient.get "#{urlapi}/api/v1/sizingblockstorage?iops=#{iops}&storage=#{storage}&region=#{region}", {:params => {}}
     respuestastorage=JSON.parse(respuestastorage.to_s)
     logger.info(respuestastorage)
@@ -260,15 +280,27 @@ end
           logger.info("NO SE OBTUVO SIZING DE STORAGE")
     end
 
-
-
-
-
     ####################################
     #Cálculo de logs
     ####################################
     if inclogs=="true"
         logger.info("=====>>>  INCLUYE LOGS")
+        storagelogs="#{params['storagelogs']}"
+        loganalysis_retencion="#{params['loganalysis_retencion']}"
+        logger.info("API LOG ANALYSIS #{urlapismonitoring}/LogAnalysis?GB=#{storagelogs}&dias=#{loganalysis_retencion}&region=us-south&preciopais=mexico")
+        respuestaloganalysis=[]
+        respuestaloganalysis = RestClient.post "#{urlapismonitoring}/LogAnalysis?GB=#{storagelogs}&dias=#{loganalysis_retencion}&region=us-south&preciopais=mexico", {:params => {}}
+        respuestaloganalysis =JSON.parse(respuestaloganalysis.to_s)
+        logger.info(respuestaloganalysis)
+        if (respuestaloganalysis != nil and respuestaloganalysis.size>0)
+          preciolog=respuestaloganalysis["total"].to_f
+          precioservicios=precioservicios+preciolog
+          logger.info("Precio LogAnalysis: #{preciolog}")
+          logger.info("Precio Servicios: #{precioservicios}")
+        else
+              logger.info("NO SE OBTUVO SIZING DE LOG ANALYSIS")
+        end
+
     else
         logger.info("=====>>> NO INCLUYE LOGS")
     end
@@ -279,19 +311,55 @@ end
     ####################################
     if inclauditoria=="true"
         logger.info("=====>>>  INCLUYE AUDITORIA")
+        storagetracker="#{params['storagetracker']}"
+        tracker_retencion="#{params['tracker_retencion']}"
+        logger.info("API ACTIVITY TRACKER #{urlapismonitoring}/ActivityTracker?GB=#{storagetracker}&dias=#{tracker_retencion}&region=us-south&preciopais=mexico")
+        respuestatracker=[]
+        respuestatracker = RestClient.post "#{urlapismonitoring}/ActivityTracker?GB=#{storagetracker}&dias=#{tracker_retencion}&region=us-south&preciopais=mexico", {:params => {}}
+        respuestatracker =JSON.parse(respuestatracker.to_s)
+        logger.info(respuestatracker)
+        if (respuestatracker != nil and respuestatracker.size>0)
+          preciotracker=respuestatracker["total"].to_f
+          precioservicios=precioservicios+preciotracker
+          logger.info("Precio Activity Tracker: #{preciotracker}")
+          logger.info("Precio Servicios: #{precioservicios}")
+        else
+              logger.info("NO SE OBTUVO SIZING DE ACTIVITY TRACKER")
+        end
+
     else
         logger.info("=====>>> NO INCLUYE AUDITORIA")
     end
-
 
     ####################################
     #Cálculo de auditoria
     ####################################
     if inclsalud=="true"
         logger.info("=====>>>  INCLUYE MONITOREO SALUD")
+        #nodoslite
+        #nodos
+        #contenedores
+        #seriestiempo
+        contenedores="#{params['contenedores']}"
+        seriestiempo="#{params['seriestiempo']}"
+        logger.info("API MONITORING #{urlapismonitoring}/CloudMonitoring?node=#{nodos}&litenode=#{nodoslite}&region=us-south&preciopais=mexico&container=#{contenedores}&timeserieshour=#{seriestiempo}")
+        respuestamonitoring=[]
+        respuestamonitoring = RestClient.post "#{urlapismonitoring}/CloudMonitoring?node=#{nodos}&litenode=#{nodoslite}&region=us-south&preciopais=mexico&container=#{contenedores}&timeserieshour=#{seriestiempo}", {:params => {}}
+        respuestamonitoring =JSON.parse(respuestamonitoring.to_s)
+        logger.info(respuestamonitoring)
+        if (respuestamonitoring != nil and respuestamonitoring.size>0)
+          preciomonitoring=respuestamonitoring["total"].to_f
+          precioservicios=precioservicios+preciomonitoring
+          logger.info("Precio Cloud Monitoring: #{preciomonitoring}")
+          logger.info("Precio Servicios: #{precioservicios}")
+        else
+              logger.info("NO SE OBTUVO SIZING DE MONITORING")
+        end
+
     else
         logger.info("=====>>> NO INCLUYE MONITOREO SALUD")
     end
+
     ####################################
     #Cálculo de respaldos
     ####################################
@@ -336,7 +404,7 @@ end
     ####################################
     if incldl=="true"
         logger.info("llamado api DL:" )
-        respuestasizingdl = RestClient.get "#{urlapiga}/api/v1/sizingdl?region=#{region}&type=#{typedl}&country_offer=#{country_offer}&puerto=#{puerto}&routing=#{routing}&ha=#{ha}", {:params => {}}
+        respuestasizingdl = RestClient.get "#{urlapiga}/api/v1/sizingdl?region=#{regiondl}&type=#{typedl}&country_offer=#{country_offer}&puerto=#{puerto}&routing=#{routing}&ha=#{ha}", {:params => {}}
         respuestasizingdl=JSON.parse(respuestasizingdl.to_s)
         logger.info("*************")
         logger.info(respuestasizingdl)
@@ -366,5 +434,14 @@ end
     logger.info("TERMINO DE LLAMAR LOS APIS")
 
     #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
-    erb :cp4dtemplate , :locals => {:respuestasol => respuestasol,:respuestasizingdl => respuestasizingdl, :respuestasizingga => respuestasizingga,:respuestasizingpx => respuestasizingpx, :respuestasizing => respuestasizing,:respuestasizingalt => respuestasizingalt, :respuestastorage => respuestastorage}
+    erb :cp4dtemplate , :locals => {:respuestamonitoring => respuestamonitoring,
+                                    :respuestatracker => respuestatracker,
+                                    :respuestaloganalysis => respuestaloganalysis,
+                                    :respuestasol => respuestasol,
+                                    :respuestasizingdl => respuestasizingdl,
+                                    :respuestasizingga => respuestasizingga,
+                                    :respuestasizingpx => respuestasizingpx,
+                                    :respuestasizing => respuestasizing,
+                                    :respuestasizingalt => respuestasizingalt,
+                                    :respuestastorage => respuestastorage}
   end
