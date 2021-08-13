@@ -7,10 +7,7 @@ set(:cookie_options) do
   { :expires => Time.now + 30*60 }
 end
 
-#************
-#Copiar y actualizar en cada módulo
-# ***Adaptar para que no se reescriban las rutas del módulo en particular donde se despliegue
-#************
+
 get '/' do
   logger = Logger.new(STDOUT)
   logger.info(request)
@@ -18,39 +15,41 @@ get '/' do
   erb :index
 
 end
-get '/uidl' do
-  redirect "https://ui-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/uidl"
-end
-get '/uiga' do
-  redirect "https://ui-ga.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/uiga"
-  #redirect "http://localhost:8090"
-end
-get '/loganalysis' do
-  redirect "https://ui-monitoring.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/VATLA?"
-  #redirect "http://localhost:8090"
+
+
+get '/soporte' do
+  logger = Logger.new(STDOUT)
+  logger.info("Selecciono dimensionamiento para Soporte")
+  @name = "Soporte"
+  respuestasizing=[]
+  respuestasizingalt=[]
+  respuestastorage=[]
+  #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
+  erb :soporte , :locals => {:respuestasizing => respuestasizing}
 end
 
-get '/monitoring' do
-  redirect "https://ui-monitoring.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/VLG?"
-  #redirect "http://localhost:8090"
-end
 
-get '/pxbackup' do
-  redirect "https://pxbackup.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
-  #redirect "http://localhost:8090"
+
+get '/soporterespuesta' do
+
+  logger = Logger.new(STDOUT)
+  logger.info("Recibiendo parametros para dimensionamiento de Soporte: type:
+              #{params[:type]} precio servicios: #{params[:precioservicios]}")
+  @name = "Soporte"
+  urlapi="https://apis.9sxuen7c9q9.us-south.codeengine.appdomain.cloud"
+  #urlapi="http://localhost:8080"
+  type="#{params['type']}"
+  precioservicios="#{params['precioservicios']}"
+
+  #parametros recibidos
+  direccionapi="#{urlapi}/api/v1/sizingsupport?type=#{type}&precioservicios=#{precioservicios}"
+  logger.info("LLAMADO DE API #{direccionapi}")
+  respuestasizing = RestClient.get direccionapi, {:params => {}}
+  respuestasizing=JSON.parse(respuestasizing.to_s)
+  logger.info(respuestasizing)
+  logger.info("TERMINO DE LLAMAR LOS APIS")
+  erb :soporte , :locals => { :respuestasizing => respuestasizing}
 end
-get '/iks' do
-  redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/iks"
-end
-get '/ocp' do
-  redirect "https://iks-ocp.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/ocp"
-end
-get '/cr' do
-  redirect "https://ui-cr.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/"
-end
-#************
-#Fin Copiar y actualizar en cada módulo
-#************
 
 
 get '/cp4d' do

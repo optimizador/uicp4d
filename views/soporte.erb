@@ -1,0 +1,103 @@
+<form action="/soporterespuesta" method="get">
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                        <h5>Configuración Soporte</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+
+                          <table style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
+                            <tr>
+                              <td>
+                                  <!-- tabla parametros del clúster -->
+                                  <table style="width:100%" align="left">
+                                    <tr>
+                                      <th bgcolor="#00008B" style="color: white;">Parámetro</th>
+                                      <th bgcolor="#00008B" style="color: white;">Valor</th>
+                                    </tr>
+                                    <tr>
+                                      <td>Precio de servicios</td>
+                                      <td>
+                                        <label for="precioservicios"><input type="number" step="0.01" id="precioservicios" name="precioservicios">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Tipo de Soporte</td>
+                                      <td>
+                                        <select name="type" id="type">
+                                          <option value="advanced">Advanced</option>
+                                          <option value="premium">Premium</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                  </table>
+
+
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+
+<p>
+<button type="submit">Quiero mi dimensionamiento</button>
+</p>
+
+
+
+</form>
+
+<!--%=respuestasizing%-->
+<% if (respuestasizing != nil and respuestasizing.size>0) then%>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                      <h5>Dimensionamiento de Soporte</h5>
+
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                      </div>
+                  </div>
+
+                  <div class="ibox-content">
+                      <table  style="width:100%" align="left"  class="footable table table-stripped toggle-arrow-tiny">
+                        <thead>
+                          <tr>
+                            <th bgcolor="#00008B" style="color: white;">Precio de Soporte </th>
+                            <th bgcolor="#00008B" style="color: white;">Tipo de Soporte</th>
+                            <th bgcolor="#00008B" style="color: white;">Precio de Servicios</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td>$<%= respuestasizing["precio"] %> USD</td>
+                              <td><%= respuestasizing["type"] %></td>
+                              <td>$<%= respuestasizing["precioservicios"] %> USD</td>
+                            </tr>
+                        </tbody>
+                      </table>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+<% end %>
