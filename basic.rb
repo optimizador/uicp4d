@@ -22,8 +22,6 @@ get '/soporte' do
   logger.info("Selecciono dimensionamiento para Soporte")
   @name = "Soporte"
   respuestasizing=[]
-  respuestasizingalt=[]
-  respuestastorage=[]
   #response['Access-Control-Allow-Origin'] = 'https://menu-dimensionamiento.9sxuen7c9q9.us-south.codeengine.appdomain.cloud/'
   erb :soporte , :locals => {:respuestasizing => respuestasizing}
 end
@@ -176,6 +174,7 @@ end
       "rsemanal:"+"#{params['rsemanal']}"+
       "rsemanalretencion:"+ "#{params['rsemanalretencion']}"+
       "rdiario: "+"#{params['rdiario']}"+
+      "diff: "+"#{params['diff']}"+
       "rdiarioretencion:"+"#{params['rdiarioretencion']}"+
       "rmensual: "+"#{params['rmensual']}"+
       "rmensualretencion:"+"#{params['rmensualretencion']}"+
@@ -201,7 +200,7 @@ end
     #{}"#{params['regioncluster']}"#region del cluster de IKS donde se desplegará PX-Backup
     countryrespaldo = "#{params['countryrespaldo']}"
     resiliencybackup ="#{params['resiliencybackup']}"
-
+    diff="#{params['diff']}"
 
     ####################################
     # Parametros para Gateway Appliance
@@ -378,8 +377,10 @@ end
     ####################################
     if increspaldos=="true"
         logger.info("llamado api PX-Backup:" )
-        logger.info("#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}")
-        respuestasizingpx = RestClient.get "#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}", {:params => {}}
+        callapi="#{urlapi}/api/lvl2/pxbackupsol_pxent?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}&diff=#{diff}"
+        #callapi="#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}"
+        logger.info(callapi)
+        respuestasizingpx = RestClient.get callapi, {:params => {}}
         respuestasizingpx = JSON.parse(respuestasizingpx.to_s)
         logger.info("*************")
         logger.info(respuestasizingpx)
@@ -543,6 +544,7 @@ get '/cp4dtemplateproduccionrespuesta' do
   logger.info("Recibiendo parametros para dimensionamiento de PX-backup:" +
     "rsemanal:"+"#{params['rsemanal']}"+
     "rsemanalretencion:"+ "#{params['rsemanalretencion']}"+
+    "diff:"+ "#{params['diff']}"+
     "rdiario: "+"#{params['rdiario']}"+
     "rdiarioretencion:"+"#{params['rdiarioretencion']}"+
     "rmensual: "+"#{params['rmensual']}"+
@@ -565,6 +567,7 @@ get '/cp4dtemplateproduccionrespuesta' do
   rmensualretencion="#{params['rmensualretencion']}"#cantidad de backups retenidos
   ranual="#{params['ranual']}"
   ranualretencion="#{params['ranualretencion']}"#cantidad de backups retenidos
+  diff="#{params['diff']}"
   regioncluster=region
   #{}"#{params['regioncluster']}"#region del cluster de IKS donde se desplegará PX-Backup
   countryrespaldo = "#{params['countryrespaldo']}"
@@ -746,8 +749,10 @@ get '/cp4dtemplateproduccionrespuesta' do
   ####################################
   if increspaldos=="true"
       logger.info("llamado api PX-Backup:" )
-      logger.info("#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}")
-      respuestasizingpx = RestClient.get "#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}", {:params => {}}
+      callapi="#{urlapi}/api/lvl2/pxbackupsol_pxent?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}&diff=#{diff}"
+      #callapi="#{urlapi}/api/lvl2/pxbackupsol?almacenamientogb=#{almacenamientogb}&rsemanal=#{rsemanal}&rsemanalretencion=#{rsemanalretencion}&rdiario=#{rdiario}&rdiarioretencion=#{rdiarioretencion}&rmensual=#{rmensual}&rmensualretencion=#{rmensualretencion}&ranual=#{ranual}&ranualretencion=#{ranualretencion}&regioncluster=#{regioncluster}&countryrespaldo=#{countryrespaldo}&resiliencybackup=#{resiliencybackup}"
+      logger.info(callapi)
+      respuestasizingpx = RestClient.get callapi, {:params => {}}
       respuestasizingpx = JSON.parse(respuestasizingpx.to_s)
       logger.info("*************")
       logger.info(respuestasizingpx)
