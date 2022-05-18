@@ -387,8 +387,8 @@ end
         precioiks=respuestasizingpx[1]["precio"]
         preciocos=respuestasizingpx[3]["precio"]
         preciopx=respuestasizingpx[2]["precio"]
-        precioservicios=precioservicios+preciopx+preciocos+precioiks
         logger.info("Precio Sol PX: IKS #{precioiks} COS #{preciocos} PX #{preciopx}")
+        precioservicios=precioservicios+preciopx.to_f+preciocos.to_f+precioiks.to_f
         logger.info("Precio Servicios: #{precioservicios}")
     else
         logger.info("=====>>> NO INCLUYE RESPALDOS")
@@ -759,8 +759,8 @@ get '/cp4dtemplateproduccionrespuesta' do
       precioiks=respuestasizingpx[1]["precio"]
       preciocos=respuestasizingpx[3]["precio"]
       preciopx=respuestasizingpx[2]["precio"]
-      precioservicios=precioservicios+preciopx+preciocos+precioiks
       logger.info("Precio Sol PX: IKS #{precioiks} COS #{preciocos} PX #{preciopx}")
+      precioservicios=precioservicios+preciopx.to_f+preciocos.to_f+precioiks.to_f
       logger.info("Precio Servicios: #{precioservicios}")
   else
       logger.info("=====>>> NO INCLUYE RESPALDOS")
